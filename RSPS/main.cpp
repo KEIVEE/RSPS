@@ -1,20 +1,26 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <exception>
+#include <vector>
 
 int main(void)
 {
-    // main window 생성
-    sf::RenderWindow window(sf::VideoMode(400, 300), "SFML window");
+    std::vector<sf::VideoMode> modes = sf::VideoMode::getFullscreenModes();
 
-    // 쓸 폰트 생성
-    sf::Font font;
-    if (!font.loadFromFile(R"(C:\Windows\Fonts\a옛날목욕탕M.ttf)"))
-        throw std::exception("font error");
+    sf::VideoMode fullScreenMode = modes[0];
 
-    // 화면에 쓸 내용
-    sf::Text text("Hello SFML", font, 50);
-    text.setFillColor(sf::Color::Green); //글씨 색깔
+    sf::RenderWindow window(fullScreenMode, "RSPS", sf::Style::Fullscreen);
+
+    sf::Texture tGood;
+
+    if (!tGood.loadFromFile("paper.png")) {
+        throw std::exception("image error");
+    }
+
+    sf::Sprite sGood(tGood);
+    sGood.setPosition(200.f, 200.f); // 초기 위치 설정
+
+    float speed = 0.1f;
 
     // 윈도우 루프 시작
     while (window.isOpen())
@@ -26,11 +32,25 @@ int main(void)
             if (event.type == sf::Event::Closed)
                 window.close();
 
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && sGood.getPosition().x > 0) {
+            sGood.move(-speed, 0);
+        }
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && sGood.getPosition().x < window.getSize().x - sGood.getGlobalBounds().width) {
+            sGood.move(speed, 0);
+        }
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && sGood.getPosition().y > 0) {
+            sGood.move(0, -speed);
+        }
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && sGood.getPosition().y < window.getSize().y - sGood.getGlobalBounds().height) {
+            sGood.move(0, speed);
+        }
+
         // 화면 청소
         window.clear();
 
         // 화면에 글씨 쓰기
-        window.draw(text);
+        window.draw(sGood);
+        
 
         // 띄우기
         window.display();
