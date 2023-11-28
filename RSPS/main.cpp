@@ -3,6 +3,7 @@
 #include <vector>
 #include "RSP.h"
 #include "Rock.h"
+#include "Slider.h"
 
 int main(void)
 {
@@ -15,12 +16,21 @@ int main(void)
     Rock rock;
     
 
-    float speed = 0.1f;
+    Vector2f leftSpeed = Vector2f(-0.1f, 0.f);
+    Vector2f rightSpeed = Vector2f(0.1f, 0.f);
+    Vector2f upSpeed = Vector2f(0.f, -0.1f);
+    Vector2f downSpeed = Vector2f(0.f, 0.1f);
+    
+    
+    
+    Vector2f sliderPos = Vector2f(50.f, 20.f);
+    Slider slider1(30.f, 3.f, sliderPos);
+
 
     // 윈도우 루프 시작
     while (window.isOpen())
     {
-        sf::Event event;
+        Event event;
 
         // 종료 여부 체크
         while (window.pollEvent(event))
@@ -28,24 +38,25 @@ int main(void)
                 window.close();
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && rock.getSprite().getPosition().x > 0) {
-            rock.move(-speed, 0.f);
+            rock.move(leftSpeed);
         }
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && rock.getSprite().getPosition().x < window.getSize().x - rock.getSprite().getGlobalBounds().width) {
-            rock.move(speed, 0.f);
+            rock.move(rightSpeed);
         }
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && rock.getSprite().getPosition().y > 0) {
-            rock.move(0.f, -speed);
+            rock.move(upSpeed);
         }
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && rock.getSprite().getPosition().y < window.getSize().y - rock.getSprite().getGlobalBounds().height) {
-            rock.move(0.f, speed);
+            rock.move(downSpeed);
         }
 
+        slider1.handleEvent(event, window);
         // 화면 청소
         window.clear();
 
         // 화면에 글씨 쓰기
-        window.draw(rock.getSprite());
-        
+        rock.draw(window);
+        slider1.draw(window);
 
         // 띄우기
         window.display();

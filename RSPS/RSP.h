@@ -8,15 +8,14 @@ using namespace sf;
 class RSP {
 protected:
 
-	float vel_x;
-	float vel_y;
+	Vector2f velocity;
 
 	Texture texture;
 	Sprite sprite;
 private:
 
 public:
-	void setVelocity(float, float);
-	void move(float, float);
+	void move(Vector2f);
 	Sprite getSprite();
+	void draw(RenderWindow& window);
 };

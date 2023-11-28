@@ -27,6 +27,9 @@
     <ClInclude Include="Scissors.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Slider.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="openal32.dll" />
@@ -50,6 +53,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="RSP.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Slider.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
