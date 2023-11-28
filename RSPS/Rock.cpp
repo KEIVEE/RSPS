@@ -11,12 +11,3 @@ Rock::Rock() {
 	sprite.setPosition(30.f, 30.f);
 }
 
-Sprite Rock::getSprite() {
-	return sprite;
-}
-
-void Rock::move(float x, float y) {
-	sprite.move(x, y);
-	vel_x = x;
-	vel_y = y;
-}

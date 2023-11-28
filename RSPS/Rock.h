@@ -1,11 +1,9 @@
 #pragma once
 #include "RSP.h"
-class Rock :RSP {
-	Texture texture;
-	Sprite sprite;
+class Rock :public RSP {
 
 public:
 	Rock();
-	Sprite getSprite();
-	void move(float, float);
+	
+	
 };
