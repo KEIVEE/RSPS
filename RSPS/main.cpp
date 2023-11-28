@@ -1,7 +1,8 @@
-#include <SFML/Graphics.hpp>
 #include <string>
 #include <exception>
 #include <vector>
+#include "RSP.h"
+#include "Rock.h"
 
 int main(void)
 {
@@ -11,14 +12,8 @@ int main(void)
 
     sf::RenderWindow window(fullScreenMode, "RSPS", sf::Style::Fullscreen);
 
-    sf::Texture tGood;
-
-    if (!tGood.loadFromFile("paper.png")) {
-        throw std::exception("image error");
-    }
-
-    sf::Sprite sGood(tGood);
-    sGood.setPosition(200.f, 200.f); // 초기 위치 설정
+    Rock rock;
+    
 
     float speed = 0.1f;
 
@@ -32,24 +27,24 @@ int main(void)
             if (event.type == sf::Event::Closed)
                 window.close();
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && sGood.getPosition().x > 0) {
-            sGood.move(-speed, 0);
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && rock.getSprite().getPosition().x > 0) {
+            rock.move(-speed, 0.f);
         }
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && sGood.getPosition().x < window.getSize().x - sGood.getGlobalBounds().width) {
-            sGood.move(speed, 0);
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && rock.getSprite().getPosition().x < window.getSize().x - rock.getSprite().getGlobalBounds().width) {
+            rock.move(speed, 0.f);
         }
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && sGood.getPosition().y > 0) {
-            sGood.move(0, -speed);
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && rock.getSprite().getPosition().y > 0) {
+            rock.move(0.f, -speed);
         }
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && sGood.getPosition().y < window.getSize().y - sGood.getGlobalBounds().height) {
-            sGood.move(0, speed);
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && rock.getSprite().getPosition().y < window.getSize().y - rock.getSprite().getGlobalBounds().height) {
+            rock.move(0.f, speed);
         }
 
         // 화면 청소
         window.clear();
 
         // 화면에 글씨 쓰기
-        window.draw(sGood);
+        window.draw(rock.getSprite());
         
 
         // 띄우기
