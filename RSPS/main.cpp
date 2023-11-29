@@ -36,7 +36,9 @@ int main(void)
     rockOffset << "Rocks: " << slider1.getOffset();
     
     
-
+    Rock rock;
+    //rock.getSprite().setPosition(500.f, 500.f);
+    
     vector<Rock> rocks;
 
 
@@ -81,8 +83,7 @@ int main(void)
 
         if (rocks.size() < slider1.getOffset()) {
             while (rocks.size() < slider1.getOffset()) {
-                Rock newRock;
-                newRock.draw(window);
+                Rock newRock = Rock(rock);
                 rocks.push_back(newRock); // 새로운 Rock 객체 추가
             }
         }
@@ -94,6 +95,9 @@ int main(void)
 
         // 화면에 글씨 쓰기
         slider1.draw(window);
+        for (int i = 0; i < rocks.size(); i++) {
+            rocks[i].draw(window);
+        }
         
         window.draw(text);
 

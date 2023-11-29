@@ -36,7 +36,7 @@ void Slider::handleEvent(Event event, RenderWindow& window) {
                 floatingBar.setPosition(x, floatingBar.getPosition().y);
             }
             offsetX = (((int)floatingBar.getPosition().x - (int)sliderBar.getPosition().x) / 3);
-            cout << offsetX << endl;
+            //cout << offsetX << endl;
         }
     }
 }
