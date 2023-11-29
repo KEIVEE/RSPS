@@ -24,7 +24,7 @@ int main(void)
     
     
     Vector2f sliderPos = Vector2f(50.f, 20.f);
-    Slider slider1(30.f, 3.f, sliderPos);
+    Slider slider1(sliderPos);
 
 
     // 윈도우 루프 시작

@@ -5,11 +5,12 @@ using namespace sf;
 
 class Slider {
 	RectangleShape sliderBar;
+	RectangleShape floatingBar;
 	bool isDragging;
 	float offsetX;
 
 public:
-	Slider(float width, float height, Vector2f position);
+	Slider(Vector2f position);
 
 	void handleEvent(Event event, RenderWindow& window);
 

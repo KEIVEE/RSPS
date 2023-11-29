@@ -1,9 +1,12 @@
 #include "Slider.h"
 
-Slider::Slider(float width, float height, Vector2f position) {
-    sliderBar.setSize(Vector2f(width, height));
+Slider::Slider( Vector2f position) {
+    sliderBar.setSize(Vector2f(300.f, 30.f));
+    floatingBar.setSize(Vector2f(30.f, 30.f));
     sliderBar.setPosition(position);
-    sliderBar.setFillColor(Color::Blue);
+    floatingBar.setPosition(position);
+    sliderBar.setFillColor(Color::White);
+    floatingBar.setFillColor(Color::Blue);
 
     isDragging = false;
     offsetX = 0.0f;
@@ -13,9 +16,9 @@ Slider::Slider(float width, float height, Vector2f position) {
 void Slider::handleEvent(Event event, RenderWindow& window) {
     if (event.type == Event::MouseButtonPressed) {
         if (event.mouseButton.button == Mouse::Left) {
-            if (sliderBar.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {
+            if (floatingBar.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {
                 isDragging = true;
-                offsetX = event.mouseButton.x - sliderBar.getPosition().x;
+                offsetX = event.mouseButton.x - floatingBar.getPosition().x;
             }
         }
     }
@@ -26,9 +29,9 @@ void Slider::handleEvent(Event event, RenderWindow& window) {
     }
     else if (event.type == Event::MouseMoved) {
         if (isDragging) {
-            float x = event.mouseMove.x - offsetX;
-            if (x >= 0 && x <= window.getSize().x - sliderBar.getSize().x) {
-                sliderBar.setPosition(x, sliderBar.getPosition().y);
+            float x = event.mouseMove.x;
+            if (x >= sliderBar.getPosition().x && x <= sliderBar.getPosition().x + sliderBar.getSize().x - floatingBar.getSize().x) {
+                floatingBar.setPosition(x, floatingBar.getPosition().y);
             }
         }
     }
@@ -36,4 +39,5 @@ void Slider::handleEvent(Event event, RenderWindow& window) {
 
 void Slider::draw(RenderWindow& window) {
     window.draw(sliderBar);
+    window.draw(floatingBar);
 }
