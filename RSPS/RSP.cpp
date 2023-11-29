@@ -5,7 +5,7 @@ Sprite RSP::getSprite() {
 	return sprite;
 }
 
-void RSP::move(Vector2f v) {
+void RSP::move(Vector2f& v) {
 	sprite.move(v);
 	velocity = v;
 }
