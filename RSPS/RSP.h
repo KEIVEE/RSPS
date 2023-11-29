@@ -15,7 +15,7 @@ protected:
 private:
 
 public:
-	void move(Vector2f);
+	void move(Vector2f&);
 	Sprite getSprite();
 	void draw(RenderWindow& window);
 };
