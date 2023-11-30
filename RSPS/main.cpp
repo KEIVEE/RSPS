@@ -39,7 +39,7 @@ int main(void)
     Rock rock;
     //rock.getSprite().setPosition(500.f, 500.f);
     
-    vector<Rock> rocks;
+    vector<Rock> rocks(90);
 
 
 
