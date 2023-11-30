@@ -19,15 +19,17 @@ void Slider::handleEvent(Event event, RenderWindow& window) {
         if (event.mouseButton.button == Mouse::Left) {
             if (floatingBar.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {
                 isDragging = true;
-                
-                
+
+
             }
         }
     }
     else if (event.type == sf::Event::MouseButtonReleased) {
         if (event.mouseButton.button == Mouse::Left) {
             isDragging = false;
+            storedValue = 1;
         }
+
     }
     else if (event.type == Event::MouseMoved) {
         if (isDragging) {
@@ -48,4 +50,12 @@ void Slider::draw(RenderWindow& window) {
 
 int Slider::getOffset() {
     return offsetX;
+}
+
+int Slider::getstoredValue() {
+    return storedValue;
+}
+
+void Slider::setstoredValue(int x) {
+    storedValue = x;
 }

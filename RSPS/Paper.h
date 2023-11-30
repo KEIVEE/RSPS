@@ -1,5 +1,9 @@
 #pragma once
 #include "RSP.h"
-class Paper :RSP {
+class Paper :public RSP {
+
+public:
+	Paper();
+	Paper(const Paper&);
 
 };

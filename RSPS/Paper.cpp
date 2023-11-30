@@ -1,11 +1,11 @@
-#include "Rock.h"
+#include "Paper.h"
 #include <exception>
 #include <random>
 
 
 
-Rock::Rock() {
-    if (!texture.loadFromFile("rock.png")) throw exception("image error");
+Paper::Paper() {
+    if (!texture.loadFromFile("paper.png")) throw exception("image error");
 
     random_device rd;
     mt19937 gen(rd());
@@ -19,7 +19,7 @@ Rock::Rock() {
     sprite.setPosition(Vector2f(randomX, randomY));
 }
 
-Rock::Rock(const Rock& original) {
+Paper::Paper(const Paper& original) {
     texture = original.texture;
 
     random_device rd;

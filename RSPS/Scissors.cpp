@@ -1,11 +1,15 @@
-#include "Rock.h"
+#include "Scissors.h"
 #include <exception>
 #include <random>
 
+Scissors::Scissors(const Scissors& original, float x, float y) {
+    texture = original.texture;
+    sprite.setTexture(texture);
+    sprite.setPosition(Vector2f(x, y));
+}
 
-
-Rock::Rock() {
-    if (!texture.loadFromFile("rock.png")) throw exception("image error");
+Scissors::Scissors() {
+    if (!texture.loadFromFile("scissors.png")) throw exception("image error");
 
     random_device rd;
     mt19937 gen(rd());
@@ -19,7 +23,7 @@ Rock::Rock() {
     sprite.setPosition(Vector2f(randomX, randomY));
 }
 
-Rock::Rock(const Rock& original) {
+Scissors::Scissors(const Scissors& original) {
     texture = original.texture;
 
     random_device rd;

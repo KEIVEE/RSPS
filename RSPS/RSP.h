@@ -15,6 +15,7 @@ protected:
 private:
 
 public:
+	void moveRandom();
 	void move(Vector2f&);
 	Sprite getSprite();
 	void draw(RenderWindow& window);
