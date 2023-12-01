@@ -11,7 +11,7 @@ class Slider {
 	RectangleShape floatingBar;
 	bool isDragging;
 	int offsetX;
-	int storedValue = 0;
+
 public:
 	Slider(Vector2f& position);
 
@@ -21,7 +21,4 @@ public:
 
 	int getOffset();
 
-	int getstoredValue();
-
-	void setstoredValue(int x);
 };

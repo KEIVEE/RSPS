@@ -4,7 +4,7 @@
 
 
 
-Rock::Rock() {
+Rock::Rock() { //수정 예정: 텍스트와 sprite만 설정하도록.
     if (!texture.loadFromFile("rock.png")) throw exception("image error");
 
     random_device rd;

@@ -27,7 +27,7 @@ void Slider::handleEvent(Event event, RenderWindow& window) {
     else if (event.type == sf::Event::MouseButtonReleased) {
         if (event.mouseButton.button == Mouse::Left) {
             isDragging = false;
-            storedValue = 1;
+
         }
 
     }
@@ -52,10 +52,3 @@ int Slider::getOffset() {
     return offsetX;
 }
 
-int Slider::getstoredValue() {
-    return storedValue;
-}
-
-void Slider::setstoredValue(int x) {
-    storedValue = x;
-}
