@@ -32,3 +32,7 @@ void RSP::moveRandom() {
 bool RSP::hitby(RSP& other) {
     return false;
 }
+
+Vector2f RSP::nearest(vector <RSP>& other) {
+    return Vector2f(0.f, 0.f);
+}

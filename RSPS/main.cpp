@@ -49,7 +49,11 @@ int main(void)
     textPap.setCharacterSize(24);
     textPap.setPosition(380.f, 100.f);
 
-
+    Text debug;
+    debug.setFont(font);
+    debug.setFillColor(Color::White);
+    debug.setCharacterSize(24);
+    debug.setPosition(380.f, 200.f);
 
 
 
@@ -119,7 +123,7 @@ int main(void)
         //피하기, 쫓기
         //속력은 벡터를 통해 항상 1로 유지되도록.
 
-        for (int i = 0; i < rocks.size(); ++i) { //rocks 랜덤으로 움직이기
+        /*for (int i = 0; i < rocks.size(); ++i) { //rocks 랜덤으로 움직이기
             if (rocks[i].getSprite().getPosition().x > 0 && (rocks[i].getSprite().getPosition().x < window.getSize().x - rocks[i].getSprite().getGlobalBounds().width) && rocks[i].getSprite().getPosition().y > 0 && rocks[i].getSprite().getPosition().y < window.getSize().y - rocks[i].getSprite().getGlobalBounds().height)
                 rocks[i].moveRandom();
             else if (rocks[i].getSprite().getPosition().x <= 0)//x좌표가 윈도우창 왼쪽을 벗어나려할때
@@ -155,7 +159,7 @@ int main(void)
             else ////y좌표가 윈도우창 아래쪽을 벗어나려할때
                 papers[i].move(upSpeed);
         }
- 
+ */
         //충돌 부분도 hitby로 따로 구현할 예정. hitby는 bool로, 프로젝트3의 hasintersected에 더 가까운 함수가 될 것 같다.
         for (int i = 0; i < scissorss.size(); i++) { //가위가 보자기를 만났을 때
             for (int j = 0; j < papers.size(); j++) {
@@ -196,8 +200,13 @@ int main(void)
 
         slider3.handleEvent(event, window);
         textPap.setString("Papers: " + to_string(slider3.getOffset()));
- 
-
+        
+        if (rocks.size() > 0 && papers.size() > 0) {
+            float magnitude = sqrt(rocks[0].nearest(papers).x * rocks[0].nearest(papers).x + rocks[0].nearest(papers).y * rocks[0].nearest(papers).y) * 5;
+            Vector2f hellothere = Vector2f(rocks[0].nearest(papers).x / magnitude, rocks[0].nearest(papers).y / magnitude);
+            rocks[0].move(hellothere);
+            debug.setString(to_string(rocks[0].nearest(papers).x) + " " + to_string(rocks[0].nearest(papers).y));
+        }
 
         // 화면 청소
         window.clear();
@@ -219,6 +228,9 @@ int main(void)
         window.draw(textRock);
         window.draw(textSci);
         window.draw(textPap);
+        if (rocks.size() > 0 && papers.size() > 0) {
+            window.draw(debug);
+        }
 
         // 띄우기
         window.display();

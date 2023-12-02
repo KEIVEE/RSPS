@@ -1,7 +1,9 @@
 #include "Rock.h"
 #include "Paper.h"
+#include "Scissors.h"
 #include <exception>
 #include <random>
+#include <cmath>
 
 
 
@@ -36,5 +38,30 @@ Rock::Rock(const Rock& original) {
 }
 
 bool Rock::hitby(Paper& paper) {
-    
+    return false;
+}
+
+Vector2f Rock::nearest(vector<Paper>& papers) {
+    float shortestDistance = 1800.f;
+    int shortestIndex = 0;
+
+    if (papers.size() > 0) {
+        for (int i = 0; i < papers.size(); i++) {
+            float distance;
+            
+            float distanceX = papers[i].getSprite().getPosition().x - sprite.getPosition().x;
+            float distanceY = papers[i].getSprite().getPosition().y - sprite.getPosition().y;
+            
+            distance = sqrt(distanceX * distanceX + distanceY * distanceY);
+
+            if (shortestDistance > distance) {
+                shortestDistance = distance;
+                shortestIndex = i;
+            }
+        }
+    }
+    else return sprite.getPosition();
+
+    return Vector2f(papers[shortestIndex].getSprite().getPosition().x-sprite.getPosition().x, papers[shortestIndex].getSprite().getPosition().y - sprite.getPosition().y);
+
 }
