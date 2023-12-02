@@ -16,8 +16,9 @@ private:
 
 public:
 	void moveRandom();
-	void move(Vector2f&);
+	void move(Vector2f&); //인자: x속도 y속도. 저만큼 움직이기
 	Sprite getSprite();
 	void draw(RenderWindow& window);
-	//virtual bool hitby(RSP& other); 다른 객체와 만났을 때 어떻게 할 것인가.
+	virtual bool hitby(RSP& other);
+	//virtual Vector2f nearest(vector <RSP>&); //객체 하나(가위라고 가정)를 기준으로 가장 가까운 다른 종류(주먹)을 찾아서 그 주먹의 위치를 반환.
 };
