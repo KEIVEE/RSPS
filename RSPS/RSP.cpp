@@ -28,3 +28,7 @@ void RSP::moveRandom() {
     sprite.move(direction * moveSpeed);
 
 }
+
+bool RSP::hitby(RSP& other) {
+    return false;
+}
