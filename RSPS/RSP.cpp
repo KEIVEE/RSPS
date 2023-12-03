@@ -5,9 +5,17 @@ Sprite RSP::getSprite() {
     return sprite;
 }
 
-void RSP::move(Vector2f& v) {
-    sprite.move(v);
-    velocity = v;
+void RSP::move(Vector2f& v, RenderWindow& window) {
+    if (sprite.getPosition().x < window.getSize().x - sprite.getGlobalBounds().width && 
+        sprite.getPosition().y < window.getSize().y - sprite.getGlobalBounds().height &&
+        sprite.getPosition().x > 0 && sprite.getPosition().y > 0) {
+        sprite.move(v);
+        velocity = v;
+    }
+    else {
+        sprite.move(0, 0);
+        velocity = Vector2f(0, 0);
+    }
 }
 
 void RSP::draw(RenderWindow& window) {
@@ -33,6 +41,6 @@ bool RSP::hitby(RSP& other) {
     return false;
 }
 
-Vector2f RSP::nearest(vector <RSP>& other) {
-    return Vector2f(0.f, 0.f);
+Vector2f const RSP::getVelocity() {
+    return velocity;
 }
