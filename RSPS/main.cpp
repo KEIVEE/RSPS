@@ -49,18 +49,11 @@ int main(void)
     textPap.setCharacterSize(24);
     textPap.setPosition(380.f, 100.f);
 
-    Text debug;
-    debug.setFont(font);
-    debug.setFillColor(Color::White);
-    debug.setCharacterSize(24);
-    debug.setPosition(380.f, 200.f);
-
 
 
     Rock rock;
     Scissors scissors;
     Paper paper;
-    //rock.getSprite().setPosition(500.f, 500.f);
 
     vector<Rock> rocks(270);
     vector<Scissors> scissorss(270);
@@ -119,77 +112,6 @@ int main(void)
             }
         }
 
-        //랜덤 움직이기도 나중 가면 삭제할 생각: 다른 메커니즘을 구현해 보자.
-        //피하기, 쫓기
-        //속력은 벡터를 통해 항상 1로 유지되도록.
-
-        /*for (int i = 0; i < rocks.size(); ++i) { //rocks 랜덤으로 움직이기
-            if (rocks[i].getSprite().getPosition().x > 0 && (rocks[i].getSprite().getPosition().x < window.getSize().x - rocks[i].getSprite().getGlobalBounds().width) && rocks[i].getSprite().getPosition().y > 0 && rocks[i].getSprite().getPosition().y < window.getSize().y - rocks[i].getSprite().getGlobalBounds().height)
-                rocks[i].moveRandom();
-            else if (rocks[i].getSprite().getPosition().x <= 0)//x좌표가 윈도우창 왼쪽을 벗어나려할때
-                rocks[i].move(rightSpeed);
-            else if (rocks[i].getSprite().getPosition().x >= window.getSize().x - rocks[i].getSprite().getGlobalBounds().width)//x좌표가 윈도우창 오른쪽을 벗어나려할때
-                rocks[i].move(leftSpeed);
-            else if (rocks[i].getSprite().getPosition().y <= 0)//y좌표가 윈도우창 위쪽을 벗어나려할때
-                rocks[i].move(downSpeed);
-            else ////y좌표가 윈도우창 아래쪽을 벗어나려할때
-                rocks[i].move(upSpeed);
-        }
-        for (int i = 0; i < scissorss.size(); ++i) { //scissorss 랜덤으로 움직이기
-            if (scissorss[i].getSprite().getPosition().x > 0 && (scissorss[i].getSprite().getPosition().x < window.getSize().x - scissorss[i].getSprite().getGlobalBounds().width) && scissorss[i].getSprite().getPosition().y > 0 && scissorss[i].getSprite().getPosition().y < window.getSize().y - scissorss[i].getSprite().getGlobalBounds().height)
-                scissorss[i].moveRandom();
-            else if (scissorss[i].getSprite().getPosition().x <= 0)//x좌표가 윈도우창 왼쪽을 벗어나려할때
-                scissorss[i].move(rightSpeed);
-            else if (scissorss[i].getSprite().getPosition().x >= window.getSize().x - scissorss[i].getSprite().getGlobalBounds().width)//x좌표가 윈도우창 오른쪽을 벗어나려할때
-                scissorss[i].move(leftSpeed);
-            else if (scissorss[i].getSprite().getPosition().y <= 0)//y좌표가 윈도우창 위쪽을 벗어나려할때
-                scissorss[i].move(downSpeed);
-            else ////y좌표가 윈도우창 아래쪽을 벗어나려할때
-                scissorss[i].move(upSpeed);
-        }
-        for (int i = 0; i < papers.size(); ++i) { //papers 랜덤으로 움직이기
-            if (papers[i].getSprite().getPosition().x > 0 && (papers[i].getSprite().getPosition().x < window.getSize().x - papers[i].getSprite().getGlobalBounds().width) && papers[i].getSprite().getPosition().y > 0 && papers[i].getSprite().getPosition().y < window.getSize().y - papers[i].getSprite().getGlobalBounds().height)
-                papers[i].moveRandom();
-            else if (papers[i].getSprite().getPosition().x <= 0)//x좌표가 윈도우창 왼쪽을 벗어나려할때
-                papers[i].move(rightSpeed);
-            else if (papers[i].getSprite().getPosition().x >= window.getSize().x - papers[i].getSprite().getGlobalBounds().width)//x좌표가 윈도우창 오른쪽을 벗어나려할때
-                papers[i].move(leftSpeed);
-            else if (papers[i].getSprite().getPosition().y <= 0)//y좌표가 윈도우창 위쪽을 벗어나려할때
-                papers[i].move(downSpeed);
-            else ////y좌표가 윈도우창 아래쪽을 벗어나려할때
-                papers[i].move(upSpeed);
-        }
- */
-        //충돌 부분도 hitby로 따로 구현할 예정. hitby는 bool로, 프로젝트3의 hasintersected에 더 가까운 함수가 될 것 같다.
-        for (int i = 0; i < scissorss.size(); i++) { //가위가 보자기를 만났을 때
-            for (int j = 0; j < papers.size(); j++) {
-                if (scissorss[i].getSprite().getPosition().x - papers[j].getSprite().getPosition().x <= 1.0f && scissorss[i].getSprite().getPosition().y - papers[j].getSprite().getPosition().y <= 1.0f) {
-                    Scissors newScissors = Scissors(scissors, papers[j].getSprite().getPosition().x, papers[j].getSprite().getPosition().y);
-
-
-                    scissorss.push_back(newScissors);
-                    papers.erase(papers.begin() + j);
-                    j--;
-                }
-
-            }
-        }
-
-
-        /*
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && rock.getSprite().getPosition().x > 0) {
-            rock.move(leftSpeed);
-        }
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && sGood.getPosition().x < window.getSize().x - sGood.getGlobalBounds().width) {
-            sGood.move(speed, 0);
-        }
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && sGood.getPosition().y > 0) {
-            sGood.move(0, -speed);
-        }
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && sGood.getPosition().y < window.getSize().y - sGood.getGlobalBounds().height) {
-            sGood.move(0, speed);
-        }
-        */
 
 
         slider1.handleEvent(event, window);
@@ -201,11 +123,61 @@ int main(void)
         slider3.handleEvent(event, window);
         textPap.setString("Papers: " + to_string(slider3.getOffset()));
         
-        if (rocks.size() > 0 && papers.size() > 0) {
-            float magnitude = sqrt(rocks[0].nearest(papers).x * rocks[0].nearest(papers).x + rocks[0].nearest(papers).y * rocks[0].nearest(papers).y) * 5;
-            Vector2f hellothere = Vector2f(rocks[0].nearest(papers).x / magnitude, rocks[0].nearest(papers).y / magnitude);
-            rocks[0].move(hellothere);
-            debug.setString(to_string(rocks[0].nearest(papers).x) + " " + to_string(rocks[0].nearest(papers).y));
+        if (rocks.size() > 0 && scissorss.size() > 0 && papers.size() > 0) { //셋 다 1개라도 있을 때: 버튼이 생기면 버튼의 조건까지 추가
+            //어느 하나라도 0일 때 버튼을 누르면? 이 코드는 돌아가지 않는데,
+            //그 상태에서는 또 다른 버튼이 나타나 다시 슬라이더 조정하라고 하는 기능을 구현할 생각.
+
+            for (int i = 0; i < rocks.size(); i++) { //rock의 경우
+                float rockChaseMagnitude = sqrt(rocks[i].nearest(scissorss).x * rocks[i].nearest(scissorss).x + rocks[i].nearest(scissorss).y * rocks[i].nearest(scissorss).y) * 2;
+                //가장 가까운 가위와의 거리: 쫓아가야 함
+                float rockAvoidMagnitude = sqrt(rocks[i].nearest(papers).x * rocks[i].nearest(papers).x + rocks[i].nearest(papers).y * rocks[i].nearest(papers).y) * 2;
+                //가장 가까운 보자기와의 거리: 피해야 함
+                
+                Vector2f rockChaseVelocity = Vector2f(rocks[i].nearest(scissorss).x / rockChaseMagnitude, rocks[i].nearest(scissorss).y / rockChaseMagnitude);
+                //가장 가까운 가위와의 위치 차이를 바탕으로 단위 속도(1이 아니긴 함) 벡터를 생성
+                Vector2f rockAvoidVelocity = Vector2f(-rocks[i].nearest(papers).x / rockAvoidMagnitude, -rocks[i].nearest(papers).y / rockAvoidMagnitude);
+                //가장 가까운 보자기와의 위치 차이를 바탕으로 단위 속도(1이 아니긴 함) 벡터를 생성
+                
+                Vector2f rockVelocity = (rockChaseMagnitude >= rockAvoidMagnitude ? rockAvoidVelocity : rockChaseVelocity);
+                //둘 중에 어떤 벡터를 쓸 것인가: 가장 가까운 보자기와 가장 가까운 가위의 거리를 생각: 그 중 보자기가 가깝다 하면 피해야 하고, 그 중 가위가 가깝다 하면 쫓아야 하고
+                //결론은, 가위랑 가까우면 가위를 쫓는 벡터를 선택, 보자기랑 가까우면 보자기를 피하는 벡터를 선택
+                rocks[i].move(rockVelocity, window);
+            }
+            
+            for (int i = 0; i < scissorss.size(); i++) {
+                float scissorsChaseMagnitude = sqrt(scissorss[i].nearest(papers).x * scissorss[i].nearest(papers).x + scissorss[i].nearest(papers).y * scissorss[i].nearest(papers).y) * 2;
+                //가장 가까운 보자기와의 거리: 쫓아야 함
+                float scissorsAvoidMagnitude = sqrt(scissorss[i].nearest(rocks).x * scissorss[i].nearest(rocks).x + scissorss[i].nearest(rocks).y * scissorss[i].nearest(rocks).y) * 2;
+                //가장 가까운 바위와의 거리
+
+                Vector2f scissorsChaseVelocity = Vector2f(scissorss[i].nearest(papers).x / scissorsChaseMagnitude, scissorss[i].nearest(papers).y / scissorsChaseMagnitude);
+                //보자기를 쫓는 속도 벡터
+                Vector2f scissorsAvoidVelocity = Vector2f(-scissorss[i].nearest(rocks).x / scissorsAvoidMagnitude, -scissorss[i].nearest(rocks).y / scissorsAvoidMagnitude);
+                //바위를 피하는 속도 벡터
+
+                
+                Vector2f scissorsVelocity = (scissorsChaseMagnitude >= scissorsAvoidMagnitude ? scissorsAvoidVelocity : scissorsChaseVelocity);
+                //벡터 중 작은 크기의 거리를 가진 벡터를 선택
+                scissorss[i].move(scissorsVelocity, window);
+            }
+
+            for (int i = 0; i < papers.size(); i++) {
+                float paperChaseMagnitude = sqrt(papers[i].nearest(rocks).x * papers[i].nearest(rocks).x + papers[i].nearest(rocks).y * papers[i].nearest(rocks).y) * 2;
+                //가장 가까운 바위와의 거리
+                float paperAvoidMagnitude = sqrt(papers[i].nearest(scissorss).x * papers[i].nearest(scissorss).x + papers[i].nearest(scissorss).y * papers[i].nearest(scissorss).y) * 2;
+                //가장 가까운 가위와의 거리
+
+                Vector2f paperChaseVelocity = Vector2f(papers[i].nearest(rocks).x / paperChaseMagnitude, papers[i].nearest(rocks).y / paperChaseMagnitude);
+                //가장 가까운 바위를 쫓는 벡터
+                Vector2f paperAvoidVelocity = Vector2f(-papers[i].nearest(scissorss).x / paperAvoidMagnitude, -papers[i].nearest(scissorss).y / paperAvoidMagnitude);
+                //가장 가까운 가위를 피하는 벡터
+
+                Vector2f paperVelocity = (paperChaseMagnitude >= paperAvoidMagnitude ? paperAvoidVelocity : paperChaseVelocity);
+                //두 벡터 중 더 가까운 놈의 벡터를 선택
+
+                papers[i].move(paperVelocity, window);
+            }
+            
         }
 
         // 화면 청소
@@ -228,9 +200,6 @@ int main(void)
         window.draw(textRock);
         window.draw(textSci);
         window.draw(textPap);
-        if (rocks.size() > 0 && papers.size() > 0) {
-            window.draw(debug);
-        }
 
         // 띄우기
         window.display();

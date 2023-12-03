@@ -1,10 +1,13 @@
 #pragma once
 #include "RSP.h"
+class Rock;
+class Paper;
+
 class Scissors :public RSP {
 
 public:
-	Scissors(const Scissors& original, float x, float y);
 	Scissors();
 	Scissors(const Scissors&);
-
+	Vector2f nearest(vector<Rock>&);
+	Vector2f nearest(vector<Paper>&);
 };
