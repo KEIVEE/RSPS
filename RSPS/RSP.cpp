@@ -20,9 +20,6 @@ void RSP::move(Vector2f& v, RenderWindow& window) {
     else if (sprite.getPosition().y == window.getSize().y - sprite.getGlobalBounds().height || sprite.getPosition().y == 0) {
         sprite.move(v.x, 0);
         velocity = Vector2f(v.x, 0);
-=======
->>>>>>> 559204f61ea53661573c281c67e85743a1ef721d
-<<<<<< < HEAD
     }
     else {
         sprite.move(0, 0);
