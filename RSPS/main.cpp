@@ -9,6 +9,7 @@
 #include "Scissors.h"
 #include "Paper.h"
 #include "Slider.h"
+#include "Button.h"
 
 int main(void)
 {
@@ -50,7 +51,11 @@ int main(void)
     textPap.setPosition(380.f, 100.f);
 
 
+     
 
+    // 버튼 객체 생성
+
+    Button myButton(Vector2f(1200, 50),font);
 
 
     Rock rock;
@@ -73,6 +78,7 @@ int main(void)
 
     bool hasStarted = false;
     //스타트 버튼을 누르면 hasstarted가 true가 될 것이다. 슬라이더는 이게 false일 때만 나타나고, true면 숨길 것
+  
 
 
     // 윈도우 루프 시작
@@ -84,6 +90,8 @@ int main(void)
         while (window.pollEvent(event))
             if (event.type == sf::Event::Closed)
                 window.close();
+
+        myButton.handleEvent(event, window, hasStarted);
 
         if (hasStarted == false) { //맨 처음 아니면 슬라이더를 조정했을때 객체 개수 맞추기
                 if (rocks.size() < slider1.getOffset()) {
@@ -118,76 +126,64 @@ int main(void)
         //랜덤 움직이기도 나중 가면 삭제할 생각: 다른 메커니즘을 구현해 보자.
         //피하기, 쫓기
         //속력은 벡터를 통해 항상 1로 유지되도록.
-
-        for (int i = 0; i < rocks.size(); ++i) { //rocks 랜덤으로 움직이기
-            if (rocks[i].getSprite().getPosition().x > 0 && (rocks[i].getSprite().getPosition().x < window.getSize().x - rocks[i].getSprite().getGlobalBounds().width) && rocks[i].getSprite().getPosition().y > 0 && rocks[i].getSprite().getPosition().y < window.getSize().y - rocks[i].getSprite().getGlobalBounds().height)
-                rocks[i].moveRandom();
-            else if (rocks[i].getSprite().getPosition().x <= 0)//x좌표가 윈도우창 왼쪽을 벗어나려할때
-                rocks[i].move(rightSpeed);
-            else if (rocks[i].getSprite().getPosition().x >= window.getSize().x - rocks[i].getSprite().getGlobalBounds().width)//x좌표가 윈도우창 오른쪽을 벗어나려할때
-                rocks[i].move(leftSpeed);
-            else if (rocks[i].getSprite().getPosition().y <= 0)//y좌표가 윈도우창 위쪽을 벗어나려할때
-                rocks[i].move(downSpeed);
-            else ////y좌표가 윈도우창 아래쪽을 벗어나려할때
-                rocks[i].move(upSpeed);
-        }
-        for (int i = 0; i < scissorss.size(); ++i) { //scissorss 랜덤으로 움직이기
-            if (scissorss[i].getSprite().getPosition().x > 0 && (scissorss[i].getSprite().getPosition().x < window.getSize().x - scissorss[i].getSprite().getGlobalBounds().width) && scissorss[i].getSprite().getPosition().y > 0 && scissorss[i].getSprite().getPosition().y < window.getSize().y - scissorss[i].getSprite().getGlobalBounds().height)
-                scissorss[i].moveRandom();
-            else if (scissorss[i].getSprite().getPosition().x <= 0)//x좌표가 윈도우창 왼쪽을 벗어나려할때
-                scissorss[i].move(rightSpeed);
-            else if (scissorss[i].getSprite().getPosition().x >= window.getSize().x - scissorss[i].getSprite().getGlobalBounds().width)//x좌표가 윈도우창 오른쪽을 벗어나려할때
-                scissorss[i].move(leftSpeed);
-            else if (scissorss[i].getSprite().getPosition().y <= 0)//y좌표가 윈도우창 위쪽을 벗어나려할때
-                scissorss[i].move(downSpeed);
-            else ////y좌표가 윈도우창 아래쪽을 벗어나려할때
-                scissorss[i].move(upSpeed);
-        }
-        for (int i = 0; i < papers.size(); ++i) { //papers 랜덤으로 움직이기
-            if (papers[i].getSprite().getPosition().x > 0 && (papers[i].getSprite().getPosition().x < window.getSize().x - papers[i].getSprite().getGlobalBounds().width) && papers[i].getSprite().getPosition().y > 0 && papers[i].getSprite().getPosition().y < window.getSize().y - papers[i].getSprite().getGlobalBounds().height)
-                papers[i].moveRandom();
-            else if (papers[i].getSprite().getPosition().x <= 0)//x좌표가 윈도우창 왼쪽을 벗어나려할때
-                papers[i].move(rightSpeed);
-            else if (papers[i].getSprite().getPosition().x >= window.getSize().x - papers[i].getSprite().getGlobalBounds().width)//x좌표가 윈도우창 오른쪽을 벗어나려할때
-                papers[i].move(leftSpeed);
-            else if (papers[i].getSprite().getPosition().y <= 0)//y좌표가 윈도우창 위쪽을 벗어나려할때
-                papers[i].move(downSpeed);
-            else ////y좌표가 윈도우창 아래쪽을 벗어나려할때
-                papers[i].move(upSpeed);
-        }
- 
-        //충돌 부분도 hitby로 따로 구현할 예정. hitby는 bool로, 프로젝트3의 hasintersected에 더 가까운 함수가 될 것 같다.
-        for (int i = 0; i < scissorss.size(); i++) { //가위가 보자기를 만났을 때
-            for (int j = 0; j < papers.size(); j++) {
-                if (scissorss[i].getSprite().getPosition().x - papers[j].getSprite().getPosition().x <= 1.0f && scissorss[i].getSprite().getPosition().y - papers[j].getSprite().getPosition().y <= 1.0f) {
-                    Scissors newScissors = Scissors(scissors, papers[j].getSprite().getPosition().x, papers[j].getSprite().getPosition().y);
-
-
-                    scissorss.push_back(newScissors);
-                    papers.erase(papers.begin() + j);
-                    j--;
-                }
-
+        if (hasStarted == true) {
+            for (int i = 0; i < rocks.size(); ++i) { //rocks 랜덤으로 움직이기
+                if (rocks[i].getSprite().getPosition().x > 0 && (rocks[i].getSprite().getPosition().x < window.getSize().x - rocks[i].getSprite().getGlobalBounds().width) && rocks[i].getSprite().getPosition().y > 0 && rocks[i].getSprite().getPosition().y < window.getSize().y - rocks[i].getSprite().getGlobalBounds().height)
+                    rocks[i].moveRandom();
+                else if (rocks[i].getSprite().getPosition().x <= 0)//x좌표가 윈도우창 왼쪽을 벗어나려할때
+                    rocks[i].move(rightSpeed);
+                else if (rocks[i].getSprite().getPosition().x >= window.getSize().x - rocks[i].getSprite().getGlobalBounds().width)//x좌표가 윈도우창 오른쪽을 벗어나려할때
+                    rocks[i].move(leftSpeed);
+                else if (rocks[i].getSprite().getPosition().y <= 0)//y좌표가 윈도우창 위쪽을 벗어나려할때
+                    rocks[i].move(downSpeed);
+                else ////y좌표가 윈도우창 아래쪽을 벗어나려할때
+                    rocks[i].move(upSpeed);
             }
-        }
+            for (int i = 0; i < scissorss.size(); ++i) { //scissorss 랜덤으로 움직이기
+                if (scissorss[i].getSprite().getPosition().x > 0 && (scissorss[i].getSprite().getPosition().x < window.getSize().x - scissorss[i].getSprite().getGlobalBounds().width) && scissorss[i].getSprite().getPosition().y > 0 && scissorss[i].getSprite().getPosition().y < window.getSize().y - scissorss[i].getSprite().getGlobalBounds().height)
+                    scissorss[i].moveRandom();
+                else if (scissorss[i].getSprite().getPosition().x <= 0)//x좌표가 윈도우창 왼쪽을 벗어나려할때
+                    scissorss[i].move(rightSpeed);
+                else if (scissorss[i].getSprite().getPosition().x >= window.getSize().x - scissorss[i].getSprite().getGlobalBounds().width)//x좌표가 윈도우창 오른쪽을 벗어나려할때
+                    scissorss[i].move(leftSpeed);
+                else if (scissorss[i].getSprite().getPosition().y <= 0)//y좌표가 윈도우창 위쪽을 벗어나려할때
+                    scissorss[i].move(downSpeed);
+                else ////y좌표가 윈도우창 아래쪽을 벗어나려할때
+                    scissorss[i].move(upSpeed);
+            }
+            for (int i = 0; i < papers.size(); ++i) { //papers 랜덤으로 움직이기
+                if (papers[i].getSprite().getPosition().x > 0 && (papers[i].getSprite().getPosition().x < window.getSize().x - papers[i].getSprite().getGlobalBounds().width) && papers[i].getSprite().getPosition().y > 0 && papers[i].getSprite().getPosition().y < window.getSize().y - papers[i].getSprite().getGlobalBounds().height)
+                    papers[i].moveRandom();
+                else if (papers[i].getSprite().getPosition().x <= 0)//x좌표가 윈도우창 왼쪽을 벗어나려할때
+                    papers[i].move(rightSpeed);
+                else if (papers[i].getSprite().getPosition().x >= window.getSize().x - papers[i].getSprite().getGlobalBounds().width)//x좌표가 윈도우창 오른쪽을 벗어나려할때
+                    papers[i].move(leftSpeed);
+                else if (papers[i].getSprite().getPosition().y <= 0)//y좌표가 윈도우창 위쪽을 벗어나려할때
+                    papers[i].move(downSpeed);
+                else ////y좌표가 윈도우창 아래쪽을 벗어나려할때
+                    papers[i].move(upSpeed);
+            }
+
+            //충돌 부분도 hitby로 따로 구현할 예정. hitby는 bool로, 프로젝트3의 hasintersected에 더 가까운 함수가 될 것 같다.
+            /*
+            for (int i = 0; i < scissorss.size(); i++) { //가위가 보자기를 만났을 때
+                for (int j = 0; j < papers.size(); j++) {
+                    if (scissorss[i].getSprite().getPosition().x - papers[j].getSprite().getPosition().x <= 1.0f && scissorss[i].getSprite().getPosition().y - papers[j].getSprite().getPosition().y <= 1.0f) {
+                        Scissors newScissors = Scissors(scissors, papers[j].getSprite().getPosition().x, papers[j].getSprite().getPosition().y);
 
 
-        /*
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && rock.getSprite().getPosition().x > 0) {
-            rock.move(leftSpeed);
-        }
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && sGood.getPosition().x < window.getSize().x - sGood.getGlobalBounds().width) {
-            sGood.move(speed, 0);
-        }
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && sGood.getPosition().y > 0) {
-            sGood.move(0, -speed);
-        }
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && sGood.getPosition().y < window.getSize().y - sGood.getGlobalBounds().height) {
-            sGood.move(0, speed);
-        }
-        */
+                        scissorss.push_back(newScissors);
+                        papers.erase(papers.begin() + j);
+                        j--;
+                    }
 
+                }
+            }    */
+       
 
+        }
+
+       
         slider1.handleEvent(event, window);
         textRock.setString("Rocks: " + to_string(slider1.getOffset()));
 
@@ -197,15 +193,31 @@ int main(void)
         slider3.handleEvent(event, window);
         textPap.setString("Papers: " + to_string(slider3.getOffset()));
  
-
+        
+        
 
         // 화면 청소
         window.clear();
 
-        // 화면에 글씨 쓰기
-        slider1.draw(window);
-        slider2.draw(window);
-        slider3.draw(window);
+        // 게임 시작하고 나면 슬라이더 없애기
+        if (hasStarted == false) {
+            slider1.draw(window);
+            slider2.draw(window);
+            slider3.draw(window);
+
+
+            window.draw(textRock);
+            window.draw(textSci);
+            window.draw(textPap);
+        }
+
+
+        //가위,바위,보 추가해야 게임 스타트 할 수 있음
+        if (rocks.size() + scissorss.size() + papers.size() >= 1) {
+            myButton.draw(window);
+        }
+       
+
 
         for (int i = 0; i < rocks.size(); i++) {
             rocks[i].draw(window);
@@ -216,10 +228,7 @@ int main(void)
         for (int i = 0; i < papers.size(); i++) {
             papers[i].draw(window);
         }
-        window.draw(textRock);
-        window.draw(textSci);
-        window.draw(textPap);
-
+      
         // 띄우기
         window.display();
     }

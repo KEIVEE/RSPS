@@ -35,6 +35,6 @@ Rock::Rock(const Rock& original) {
     sprite.setPosition(Vector2f(randomX, randomY));
 }
 
-bool Rock::hitby(Paper& paper) {
+//bool Rock::hitby(Paper& paper) {
     
-}
+//}
