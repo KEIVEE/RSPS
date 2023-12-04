@@ -6,5 +6,5 @@ class Rock :public RSP {
 public:
 	Rock();
 	Rock(const Rock&);
-	//bool hitby(Paper& paper);
+	bool hitby(Paper& paper);
 };

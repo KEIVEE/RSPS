@@ -165,20 +165,19 @@ int main(void)
             }
 
             //충돌 부분도 hitby로 따로 구현할 예정. hitby는 bool로, 프로젝트3의 hasintersected에 더 가까운 함수가 될 것 같다.
-            /*
-            for (int i = 0; i < scissorss.size(); i++) { //가위가 보자기를 만났을 때
+            for (int i = 0; i < rocks.size(); i++) { //가위가 보자기를 만났을 때
                 for (int j = 0; j < papers.size(); j++) {
-                    if (scissorss[i].getSprite().getPosition().x - papers[j].getSprite().getPosition().x <= 1.0f && scissorss[i].getSprite().getPosition().y - papers[j].getSprite().getPosition().y <= 1.0f) {
-                        Scissors newScissors = Scissors(scissors, papers[j].getSprite().getPosition().x, papers[j].getSprite().getPosition().y);
+                    if (rocks[i].hitby(papers[j])) {
+                        Rock newRocks = Rock(rock);
+                        newRocks.getSprite().setPosition(papers[j].getSprite().getPosition().x, papers[j].getSprite().getPosition().y);
 
-
-                        scissorss.push_back(newScissors);
+                        rocks.push_back(newRocks);
                         papers.erase(papers.begin() + j);
                         j--;
                     }
 
                 }
-            }    */
+            }
        
 
         }
