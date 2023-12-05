@@ -20,5 +20,6 @@ public:
 	Sprite getSprite();
 	void draw(RenderWindow& window);
 	virtual bool hitby(RSP& other);
+	void setPosition(Vector2f& position);
 	//virtual Vector2f nearest(vector <RSP>&); //객체 하나(가위라고 가정)를 기준으로 가장 가까운 다른 종류(주먹)을 찾아서 그 주먹의 위치를 반환.
 };

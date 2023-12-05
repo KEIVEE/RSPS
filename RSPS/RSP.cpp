@@ -32,3 +32,8 @@ void RSP::moveRandom() {
 bool RSP::hitby(RSP& other) {
     return false;
 }
+
+
+void RSP::setPosition(Vector2f& position) {
+    sprite.setPosition(position);
+}

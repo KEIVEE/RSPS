@@ -51,7 +51,23 @@ int main(void)
     textPap.setPosition(380.f, 100.f);
 
 
-     
+    Text debug; //paper 슬라이더 text
+    debug.setFont(font);
+    debug.setFillColor(Color::White);
+    debug.setCharacterSize(24);
+    debug.setPosition(900.f, 150.f);
+
+    Text debug2; //paper 슬라이더 text
+    debug2.setFont(font);
+    debug2.setFillColor(Color::White);
+    debug2.setCharacterSize(24);
+    debug2.setPosition(900.f, 200.f);
+
+    Text debug3; //paper 슬라이더 text
+    debug3.setFont(font);
+    debug3.setFillColor(Color::White);
+    debug3.setCharacterSize(24);
+    debug3.setPosition(900.f, 250.f);
 
     // 버튼 객체 생성
 
@@ -127,6 +143,8 @@ int main(void)
         //피하기, 쫓기
         //속력은 벡터를 통해 항상 1로 유지되도록.
         if (hasStarted == true) {
+
+           
             for (int i = 0; i < rocks.size(); ++i) { //rocks 랜덤으로 움직이기
                 if (rocks[i].getSprite().getPosition().x > 0 && (rocks[i].getSprite().getPosition().x < window.getSize().x - rocks[i].getSprite().getGlobalBounds().width) && rocks[i].getSprite().getPosition().y > 0 && rocks[i].getSprite().getPosition().y < window.getSize().y - rocks[i].getSprite().getGlobalBounds().height)
                     rocks[i].moveRandom();
@@ -163,17 +181,27 @@ int main(void)
                 else ////y좌표가 윈도우창 아래쪽을 벗어나려할때
                     papers[i].move(upSpeed);
             }
-
+          
             //충돌 부분도 hitby로 따로 구현할 예정. hitby는 bool로, 프로젝트3의 hasintersected에 더 가까운 함수가 될 것 같다.
-            for (int i = 0; i < rocks.size(); i++) { //가위가 보자기를 만났을 때
-                for (int j = 0; j < papers.size(); j++) {
-                    if (rocks[i].hitby(papers[j])) {
-                        Rock newRocks = Rock(rock);
-                        newRocks.getSprite().setPosition(papers[j].getSprite().getPosition().x, papers[j].getSprite().getPosition().y);
+            for (int i = 0; i < papers.size(); i++) { //바위가 보자기를 만났을 때
+                for (int j = 0; j < rocks.size(); j++) {
+                    if (rocks[j].hitby(papers[i])) {
 
-                        rocks.push_back(newRocks);
-                        papers.erase(papers.begin() + j);
-                        j--;
+                        
+                        int k = j;
+                        
+                        Vector2f originalPosition = Vector2f(rocks[j].getSprite().getPosition().x, rocks[j].getSprite().getPosition().y);
+                        debug.setString("pos num: " + to_string(originalPosition.x) + "   " + to_string(originalPosition.y) + "   " + to_string(k));
+                        rocks.erase(rocks.begin() + j);
+
+                        Paper newPaper = Paper(originalPosition);
+                        
+                        papers.push_back(newPaper);
+                        papers.back().setPosition(originalPosition);
+                        debug2.setString("pos: " + to_string(newPaper.getSprite().getPosition().x) + "   " + to_string(newPaper.getSprite().getPosition().y));
+                        debug3.setString("pos: " + to_string(papers.back().getSprite().getPosition().x) + "  " + to_string(papers.back().getSprite().getPosition().y));
+                        break;
+                        
                     }
 
                 }
@@ -191,9 +219,10 @@ int main(void)
 
         slider3.handleEvent(event, window);
         textPap.setString("Papers: " + to_string(slider3.getOffset()));
- 
-        
-        
+        if (papers.size() > 0) {
+            //debug3.setString("pos: " + to_string(papers.back().getSprite().getPosition().x) + "  " + to_string(papers.back().getSprite().getPosition().y));
+        }
+
 
         // 화면 청소
         window.clear();
@@ -210,6 +239,10 @@ int main(void)
             window.draw(textPap);
         }
 
+
+        window.draw(debug);
+        window.draw(debug2);
+        window.draw(debug3);
 
         //가위,바위,보 추가해야 게임 스타트 할 수 있음
         if (rocks.size() + scissorss.size() + papers.size() >= 1) {
