@@ -12,7 +12,8 @@ void RSP::move(Vector2f& v) {
 
 void RSP::draw(RenderWindow& window) {
     window.draw(sprite);
-}
+} 
+
 
 void RSP::moveRandom() {
     // 랜덤한 방향 설정

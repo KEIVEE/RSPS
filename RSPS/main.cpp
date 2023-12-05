@@ -12,9 +12,9 @@
 #include "Button.h"
 
 int main(void)
-{
+{ 
     RenderWindow window(VideoMode(1500, 900), "RSPS", sf::Style::Titlebar | sf::Style::Close);
-   
+    
     
     Vector2f sliderRockPos = Vector2f(50.f, 20.f);
     Vector2f sliderSciPos = Vector2f(50.f, 60.f);
@@ -51,23 +51,7 @@ int main(void)
     textPap.setPosition(380.f, 100.f);
 
 
-    Text debug; //paper 슬라이더 text
-    debug.setFont(font);
-    debug.setFillColor(Color::White);
-    debug.setCharacterSize(24);
-    debug.setPosition(900.f, 150.f);
-
-    Text debug2; //paper 슬라이더 text
-    debug2.setFont(font);
-    debug2.setFillColor(Color::White);
-    debug2.setCharacterSize(24);
-    debug2.setPosition(900.f, 200.f);
-
-    Text debug3; //paper 슬라이더 text
-    debug3.setFont(font);
-    debug3.setFillColor(Color::White);
-    debug3.setCharacterSize(24);
-    debug3.setPosition(900.f, 250.f);
+    
 
     // 버튼 객체 생성
 
@@ -77,15 +61,28 @@ int main(void)
     Rock rock;
     Scissors scissors;
     Paper paper;
+
+    sf::Texture rockTexture;
+    if (!rockTexture.loadFromFile("rock.png")) {
+        // 텍스처 로드 실패 처리
+        return EXIT_FAILURE;
+    }
+    sf::Texture scissorsTexture;
+    if (!scissorsTexture.loadFromFile("scissors.png")) {
+        // 텍스처 로드 실패 처리
+        return EXIT_FAILURE;
+    }
+    sf::Texture paperTexture;
+    if (!paperTexture.loadFromFile("paper.png")) {
+        // 텍스처 로드 실패 처리
+        return EXIT_FAILURE;
+    }
+    
     //rock.getSprite().setPosition(500.f, 500.f);
 
     vector<Rock> rocks(270);
     vector<Scissors> scissorss(270);
     vector<Paper> papers(270);
-
-
-   
-   
 
     Vector2f leftSpeed = Vector2f(-0.1f, 0.f);
     Vector2f rightSpeed = Vector2f(0.1f, 0.f);
@@ -95,8 +92,9 @@ int main(void)
     bool hasStarted = false;
     //스타트 버튼을 누르면 hasstarted가 true가 될 것이다. 슬라이더는 이게 false일 때만 나타나고, true면 숨길 것
   
-
-
+    
+    
+    
     // 윈도우 루프 시작
     while (window.isOpen())
     {
@@ -108,11 +106,12 @@ int main(void)
                 window.close();
 
         myButton.handleEvent(event, window, hasStarted);
-
-        if (hasStarted == false) { //맨 처음 아니면 슬라이더를 조정했을때 객체 개수 맞추기
+        
+        if (hasStarted == false ) { //맨 처음 아니면 슬라이더를 조정했을때 객체 개수 맞추기
                 if (rocks.size() < slider1.getOffset()) {
                     while (rocks.size() < slider1.getOffset()) {
-                        Rock newRock = Rock(rock);
+                        Rock newRock = Rock(rock, rockTexture);
+                        
                         rocks.push_back(newRock); // 새로운 Rock 객체 추가
                     }
                 }
@@ -121,8 +120,8 @@ int main(void)
                 }
                 if (scissorss.size() < slider2.getOffset()) {
                     while (scissorss.size() < slider2.getOffset()) {
-                        Scissors newScissors = Scissors(scissors);
-                        scissorss.push_back(newScissors); // 새로운 scissors 객체 추가
+                        Scissors newScissors = Scissors(scissors,scissorsTexture);
+                        scissorss.push_back(newScissors); // 새로운 scissors 객체 추가  
                     }
                 }
                 else if (scissorss.size() > slider2.getOffset()) {
@@ -130,13 +129,14 @@ int main(void)
                 }
                 if (papers.size() < slider3.getOffset()) {
                     while (papers.size() < slider3.getOffset()) {
-                        Paper newPaper = Paper(paper);
+                        Paper newPaper = Paper(paper,paperTexture);
                         papers.push_back(newPaper); // 새로운 paper 객체 추가
                     }
                 }
                 else if (papers.size() > slider3.getOffset()) {
                     papers.resize(slider3.getOffset()); // paper 개수 줄이기
             }
+                
         }
 
         //랜덤 움직이기도 나중 가면 삭제할 생각: 다른 메커니즘을 구현해 보자.
@@ -144,7 +144,7 @@ int main(void)
         //속력은 벡터를 통해 항상 1로 유지되도록.
         if (hasStarted == true) {
 
-           
+            
             for (int i = 0; i < rocks.size(); ++i) { //rocks 랜덤으로 움직이기
                 if (rocks[i].getSprite().getPosition().x > 0 && (rocks[i].getSprite().getPosition().x < window.getSize().x - rocks[i].getSprite().getGlobalBounds().width) && rocks[i].getSprite().getPosition().y > 0 && rocks[i].getSprite().getPosition().y < window.getSize().y - rocks[i].getSprite().getGlobalBounds().height)
                     rocks[i].moveRandom();
@@ -183,28 +183,78 @@ int main(void)
             }
           
             //충돌 부분도 hitby로 따로 구현할 예정. hitby는 bool로, 프로젝트3의 hasintersected에 더 가까운 함수가 될 것 같다.
+            int i = 0;
+            int j = 0;
+            int papercount = papers.size();
+            int rockcount = rocks.size();
             for (int i = 0; i < papers.size(); i++) { //바위가 보자기를 만났을 때
                 for (int j = 0; j < rocks.size(); j++) {
                     if (rocks[j].hitby(papers[i])) {
-
-                        
                         int k = j;
                         
                         Vector2f originalPosition = Vector2f(rocks[j].getSprite().getPosition().x, rocks[j].getSprite().getPosition().y);
-                        debug.setString("pos num: " + to_string(originalPosition.x) + "   " + to_string(originalPosition.y) + "   " + to_string(k));
+                       
+                        
                         rocks.erase(rocks.begin() + j);
-
-                        Paper newPaper = Paper(originalPosition);
+                       
+                        Paper newPaper = Paper(originalPosition, paperTexture);
                         
-                        papers.push_back(newPaper);
+                        papers.push_back(newPaper); 
                         papers.back().setPosition(originalPosition);
-                        debug2.setString("pos: " + to_string(newPaper.getSprite().getPosition().x) + "   " + to_string(newPaper.getSprite().getPosition().y));
-                        debug3.setString("pos: " + to_string(papers.back().getSprite().getPosition().x) + "  " + to_string(papers.back().getSprite().getPosition().y));
-                        break;
                         
+                        break;
+
                     }
+                    
 
                 }
+               
+            }
+            for (int i = 0; i < rocks.size(); i++) { //바위가 가위를 만났을 때
+                for (int j = 0; j < scissorss.size(); j++) {
+                    if (scissorss[j].hitby(rocks[i])) {
+                        int k = j;
+
+                        Vector2f originalPosition = Vector2f(scissorss[j].getSprite().getPosition().x, scissorss[j].getSprite().getPosition().y);
+                       
+
+                        scissorss.erase(scissorss.begin() + j);
+
+                        Rock newRock = Rock(originalPosition,rockTexture);
+
+                        rocks.push_back(newRock);
+                        rocks.back().setPosition(originalPosition);
+                        
+                        break;
+
+                    }
+
+
+                }
+
+            }
+            for (int i = 0; i < scissorss.size(); i++) { //가위와 보자기가 만났을때
+                for (int j = 0; j < papers.size(); j++) {
+                    if (papers[j].hitby(scissorss[i])) {
+                        int k = j;
+
+                        Vector2f originalPosition = Vector2f(papers[j].getSprite().getPosition().x, papers[j].getSprite().getPosition().y);
+                        
+
+                        papers.erase(papers.begin() + j);
+
+                        Scissors newScissors = Scissors(originalPosition,scissorsTexture);
+
+                        scissorss.push_back(newScissors);
+                        scissorss.back().setPosition(originalPosition);
+                       
+                        break;
+
+                    }
+
+
+                }
+
             }
        
 
@@ -240,17 +290,13 @@ int main(void)
         }
 
 
-        window.draw(debug);
-        window.draw(debug2);
-        window.draw(debug3);
 
         //가위,바위,보 추가해야 게임 스타트 할 수 있음
         if (rocks.size() + scissorss.size() + papers.size() >= 1) {
             myButton.draw(window);
         }
        
-
-
+        
         for (int i = 0; i < rocks.size(); i++) {
             rocks[i].draw(window);
         }

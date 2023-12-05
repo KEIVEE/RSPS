@@ -1,12 +1,10 @@
 #include "Scissors.h"
+#include "Rock.h"
 #include <exception>
 #include <random>
 
-Scissors::Scissors(const Scissors& original, float x, float y) {
-    texture = original.texture;
-    sprite.setTexture(texture);
-    sprite.setPosition(Vector2f(x, y));
-}
+
+
 
 Scissors::Scissors() {
     if (!texture.loadFromFile("scissors.png")) throw exception("image error");
@@ -23,7 +21,7 @@ Scissors::Scissors() {
     sprite.setPosition(Vector2f(randomX, randomY));
 }
 
-Scissors::Scissors(const Scissors& original) {
+Scissors::Scissors(const Scissors& original, Texture& texturePtr) {
     texture = original.texture;
 
     random_device rd;
@@ -34,6 +32,19 @@ Scissors::Scissors(const Scissors& original) {
     float randomX = disX(gen);
     float randomY = disY(gen);
 
-    sprite.setTexture(texture);
+    sprite.setTexture(texturePtr);
     sprite.setPosition(Vector2f(randomX, randomY));
+}
+
+Scissors::Scissors(Vector2f& pos, Texture& texturePtr) {
+
+    sprite.setTexture(texturePtr);
+    sprite.setPosition(pos);
+}
+
+bool Scissors::hitby(Rock& rock) {
+    if (this->getSprite().getGlobalBounds().intersects(rock.getSprite().getGlobalBounds())) {
+        return true;
+    }
+    return false;
 }

@@ -1,4 +1,5 @@
 #include "Paper.h"
+#include "Scissors.h"
 #include <exception>
 #include <random>
 
@@ -9,7 +10,7 @@ Paper::Paper() {
     sprite.setTexture(texture);
 }
 
-Paper::Paper(const Paper& original) {
+Paper::Paper(const Paper& original, Texture& texturePtr) {
     texture = original.texture;
 
     random_device rd;
@@ -20,12 +21,19 @@ Paper::Paper(const Paper& original) {
     float randomX = disX(gen);
     float randomY = disY(gen);
 
-    sprite.setTexture(texture);
+    sprite.setTexture(texturePtr);
     sprite.setPosition(Vector2f(randomX, randomY));
 }
 
-Paper::Paper(Vector2f& pos) {
-    if (!texture.loadFromFile("paper.png")) throw exception("image error");
-    sprite.setTexture(texture);
+Paper::Paper(Vector2f& pos, Texture& texturePtr) {
+    
+    sprite.setTexture(texturePtr);
     sprite.setPosition(pos);
+}
+
+bool Paper::hitby(Scissors& scissors) {
+    if (this->getSprite().getGlobalBounds().intersects(scissors.getSprite().getGlobalBounds())) {
+        return true;
+    }
+    return false;
 }

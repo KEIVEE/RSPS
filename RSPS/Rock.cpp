@@ -12,7 +12,7 @@ Rock::Rock() { //수정 예정: 텍스트와 sprite만 설정하도록.
     sprite.setTexture(texture);
 }
 
-Rock::Rock(const Rock& original) {
+Rock::Rock(const Rock& original, Texture& texturePtr) {
     texture = original.texture;
 
     random_device rd;
@@ -23,8 +23,15 @@ Rock::Rock(const Rock& original) {
     float randomX = disX(gen);
     float randomY = disY(gen);
 
-    sprite.setTexture(texture);
+    sprite.setTexture(texturePtr);
     sprite.setPosition(Vector2f(randomX, randomY));
+}
+
+
+Rock::Rock(Vector2f& pos, Texture& texturePtr) {
+    
+    sprite.setTexture(texturePtr);
+    sprite.setPosition(pos);
 }
 
 bool Rock::hitby(Paper& paper) {

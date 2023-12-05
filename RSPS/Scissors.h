@@ -1,10 +1,13 @@
 #pragma once
 #include "RSP.h"
+class Rock;
+class Paper;
 class Scissors :public RSP {
 
 public:
-	Scissors(const Scissors& original, float x, float y);
+	
 	Scissors();
-	Scissors(const Scissors&);
-
+	Scissors(const Scissors&, Texture& texturePtr);
+	Scissors(Vector2f& pos, Texture& texturePtr);
+	bool hitby(Rock& rock);
 };
