@@ -21,4 +21,5 @@ public:
 
 	int getOffset();
 
+	void resetSlider();
 };

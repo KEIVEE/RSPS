@@ -52,3 +52,8 @@ int Slider::getOffset() {
     return offsetX;
 }
 
+void Slider::resetSlider() {
+    floatingBar.setPosition(sliderBar.getPosition().x, sliderBar.getPosition().y - 7.5f);
+    isDragging = false;
+    offsetX = 0;
+}
