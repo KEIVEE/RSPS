@@ -51,6 +51,12 @@ int main(void)
     textPap.setPosition(380.f, 100.f);
 
 
+    Text debug; //paper 슬라이더 text
+    debug.setFont(font);
+    debug.setFillColor(Color::White);
+    debug.setCharacterSize(24);
+    debug.setPosition(380.f, 140.f);
+
      
     // 버튼 객체 생성
   
@@ -158,15 +164,17 @@ int main(void)
                 //가장 가까운 보자기와의 위치 차이를 바탕으로 단위 속도(1이 아니긴 함) 벡터를 생성
 
                 Vector2f rockVelocity = (rockChaseMagnitude >= rockAvoidMagnitude ? rockAvoidVelocity : rockChaseVelocity);
+                if (rockChaseMagnitude == 0) rockVelocity = rockAvoidVelocity;
+                if (rockAvoidMagnitude == 0) rockVelocity = rockChaseVelocity;
                 //둘 중에 어떤 벡터를 쓸 것인가: 가장 가까운 보자기와 가장 가까운 가위의 거리를 생각: 그 중 보자기가 가깝다 하면 피해야 하고, 그 중 가위가 가깝다 하면 쫓아야 하고
                 //결론은, 가위랑 가까우면 가위를 쫓는 벡터를 선택, 보자기랑 가까우면 보자기를 피하는 벡터를 선택
                 rocks[i].move(rockVelocity, window);
             }
 
             for (int i = 0; i < scissorss.size(); i++) {
-                float scissorsChaseMagnitude = sqrt(scissorss[i].nearest(papers).x * scissorss[i].nearest(papers).x + scissorss[i].nearest(papers).y * scissorss[i].nearest(papers).y) * 2;
+                float scissorsChaseMagnitude = sqrt(scissorss[i].nearest(papers).x * scissorss[i].nearest(papers).x + scissorss[i].nearest(papers).y * scissorss[i].nearest(papers).y);
                 //가장 가까운 보자기와의 거리: 쫓아야 함
-                float scissorsAvoidMagnitude = sqrt(scissorss[i].nearest(rocks).x * scissorss[i].nearest(rocks).x + scissorss[i].nearest(rocks).y * scissorss[i].nearest(rocks).y) * 2;
+                float scissorsAvoidMagnitude = sqrt(scissorss[i].nearest(rocks).x * scissorss[i].nearest(rocks).x + scissorss[i].nearest(rocks).y * scissorss[i].nearest(rocks).y);
                 //가장 가까운 바위와의 거리
 
                 Vector2f scissorsChaseVelocity = Vector2f(scissorss[i].nearest(papers).x / scissorsChaseMagnitude, scissorss[i].nearest(papers).y / scissorsChaseMagnitude);
@@ -176,14 +184,16 @@ int main(void)
 
 
                 Vector2f scissorsVelocity = (scissorsChaseMagnitude >= scissorsAvoidMagnitude ? scissorsAvoidVelocity : scissorsChaseVelocity);
+                if (scissorsChaseMagnitude == 0) scissorsVelocity = scissorsAvoidVelocity;
+                if (scissorsAvoidMagnitude == 0) scissorsVelocity = scissorsChaseVelocity;
                 //벡터 중 작은 크기의 거리를 가진 벡터를 선택
                 scissorss[i].move(scissorsVelocity, window);
             }
 
             for (int i = 0; i < papers.size(); i++) {
-                float paperChaseMagnitude = sqrt(papers[i].nearest(rocks).x * papers[i].nearest(rocks).x + papers[i].nearest(rocks).y * papers[i].nearest(rocks).y) * 2;
+                float paperChaseMagnitude = sqrt(papers[i].nearest(rocks).x * papers[i].nearest(rocks).x + papers[i].nearest(rocks).y * papers[i].nearest(rocks).y);
                 //가장 가까운 바위와의 거리
-                float paperAvoidMagnitude = sqrt(papers[i].nearest(scissorss).x * papers[i].nearest(scissorss).x + papers[i].nearest(scissorss).y * papers[i].nearest(scissorss).y) * 2;
+                float paperAvoidMagnitude = sqrt(papers[i].nearest(scissorss).x * papers[i].nearest(scissorss).x + papers[i].nearest(scissorss).y * papers[i].nearest(scissorss).y);
                 //가장 가까운 가위와의 거리
 
                 Vector2f paperChaseVelocity = Vector2f(papers[i].nearest(rocks).x / paperChaseMagnitude, papers[i].nearest(rocks).y / paperChaseMagnitude);
@@ -192,6 +202,8 @@ int main(void)
                 //가장 가까운 가위를 피하는 벡터
 
                 Vector2f paperVelocity = (paperChaseMagnitude >= paperAvoidMagnitude ? paperAvoidVelocity : paperChaseVelocity);
+                if (paperChaseMagnitude == 0) paperVelocity = paperAvoidVelocity;
+                if (paperAvoidMagnitude == 0) paperVelocity = paperChaseVelocity;
                 //두 벡터 중 더 가까운 놈의 벡터를 선택
 
                 papers[i].move(paperVelocity, window);
@@ -285,6 +297,10 @@ int main(void)
 
         slider3.handleEvent(event, window);
         textPap.setString("Papers: " + to_string(slider3.getOffset()));
+
+
+        debug.setString("pos: " + to_string(rocks.size()) + "  " + to_string(scissorss.size()) + "   " + to_string(papers.size()));
+
  
         myButton.handleEvent(event, window, hasStarted, reset, textButton);
         
@@ -302,6 +318,7 @@ int main(void)
             window.draw(textRock);
             window.draw(textSci);
             window.draw(textPap);
+            
         }
 
 
@@ -346,6 +363,8 @@ int main(void)
         for (int i = 0; i < papers.size(); i++) {
             papers[i].draw(window);
         }
+
+        window.draw(debug);
       
         // 띄우기
         window.display();

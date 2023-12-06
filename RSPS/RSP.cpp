@@ -6,25 +6,30 @@ Sprite RSP::getSprite() {
 }
 
 void RSP::move(Vector2f& v, RenderWindow& window) {
-    if (sprite.getPosition().x < window.getSize().x - sprite.getGlobalBounds().width && 
-        sprite.getPosition().y < window.getSize().y - sprite.getGlobalBounds().height &&
-        sprite.getPosition().x > 0 && sprite.getPosition().y > 0) {
-        sprite.move(v);
-        velocity = v;
+    if (sprite.getPosition().x <= window.getSize().x - sprite.getGlobalBounds().width && 
+        sprite.getPosition().y <= window.getSize().y - sprite.getGlobalBounds().height &&
+        sprite.getPosition().x >= 0 && sprite.getPosition().y >= 0) {
+
+
+        
+            sprite.move(v);
+            velocity = v;
+
+        
+
 
     }//hitby완성시 수정 필요할듯.
-    else if (sprite.getPosition().x == window.getSize().x - sprite.getGlobalBounds().width || sprite.getPosition().x == 0) {
-        sprite.move(0, v.y);
-        velocity = Vector2f(0, v.y);
+    
+    if ((sprite.getPosition().x >= window.getSize().x - sprite.getGlobalBounds().width-1 || sprite.getPosition().x <= 1) &&
+        (sprite.getPosition().y <= window.getSize().y - sprite.getGlobalBounds().height-1 && sprite.getPosition().y >= 1)) {
+        sprite.move(-v.x, v.y);
     }
-    else if (sprite.getPosition().y == window.getSize().y - sprite.getGlobalBounds().height || sprite.getPosition().y == 0) {
-        sprite.move(v.x, 0);
-        velocity = Vector2f(v.x, 0);
+
+    if ((sprite.getPosition().y >= window.getSize().y - sprite.getGlobalBounds().height-1 || sprite.getPosition().y <= 1) &&
+        (sprite.getPosition().x <= window.getSize().x - sprite.getGlobalBounds().width-1 && sprite.getPosition().x >= 1)) {
+        sprite.move(v.x, -v.y);
     }
-    else {
-        sprite.move(0, 0);
-        velocity = Vector2f(0, 0);
-    }
+
 }
 
 void RSP::draw(RenderWindow& window) {
@@ -54,7 +59,6 @@ bool RSP::hitby(RSP& other) {
 Vector2f const RSP::getVelocity() {
     return velocity;
 }
-
 
 
 void RSP::setPosition(Vector2f& position) {

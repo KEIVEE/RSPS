@@ -67,7 +67,7 @@ Vector2f Rock::nearest(vector<Scissors>& scissors) {
             }
         }
     }
-    else return sprite.getPosition();
+    else return Vector2f(0, 0);;
 
     return Vector2f(scissors[shortestIndex].getSprite().getPosition().x-sprite.getPosition().x, scissors[shortestIndex].getSprite().getPosition().y - sprite.getPosition().y);
     //최소 거리 인덱스에 있는 가위와 이 바위 객체와의 위치 차이를 리턴.
@@ -92,7 +92,7 @@ Vector2f Rock::nearest(vector<Paper>& papers) {
             }
         }
     }
-    else return sprite.getPosition();
+    else return Vector2f(0, 0);;
 
     return Vector2f(papers[shortestIndex].getSprite().getPosition().x - sprite.getPosition().x, papers[shortestIndex].getSprite().getPosition().y - sprite.getPosition().y);
 

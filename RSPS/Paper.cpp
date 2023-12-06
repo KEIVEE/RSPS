@@ -46,7 +46,7 @@ Vector2f Paper::nearest(vector<Rock>& rocks) { //rock.cpp에 있는 주석 참고
             }
         }
     }
-    else return sprite.getPosition();
+    else return Vector2f(0, 0);;
 
     return Vector2f(rocks[shortestIndex].getSprite().getPosition().x - sprite.getPosition().x, rocks[shortestIndex].getSprite().getPosition().y - sprite.getPosition().y);
 
@@ -71,7 +71,7 @@ Vector2f Paper::nearest(vector<Scissors>& Scissorss) {
             }
         }
     }
-    else return sprite.getPosition();
+    else return Vector2f(0, 0);
 
     return Vector2f(Scissorss[shortestIndex].getSprite().getPosition().x - sprite.getPosition().x, Scissorss[shortestIndex].getSprite().getPosition().y - sprite.getPosition().y);
 }
