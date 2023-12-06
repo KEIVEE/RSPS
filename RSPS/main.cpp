@@ -325,8 +325,8 @@ int main(void)
 
         //게임종료 후, 다시 시작할 때 초기화
         if (reset == true) {
-            rocks.clear();
             scissorss.clear();
+            rocks.clear();
             papers.clear();
             
             slider1.resetSlider();

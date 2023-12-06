@@ -74,10 +74,17 @@ Vector2f Paper::nearest(vector<Scissors>& Scissorss) {
     else return sprite.getPosition();
 
     return Vector2f(Scissorss[shortestIndex].getSprite().getPosition().x - sprite.getPosition().x, Scissorss[shortestIndex].getSprite().getPosition().y - sprite.getPosition().y);
+}
+
 
 bool Paper::hitby(Scissors& scissors) {
     if (this->getSprite().getGlobalBounds().intersects(scissors.getSprite().getGlobalBounds())) {
         return true;
     }
     return false;
+}
+
+Paper::Paper(Vector2f& pos, Texture& texturePtr) {
+    sprite.setTexture(texturePtr);
+    sprite.setPosition(pos);
 }
