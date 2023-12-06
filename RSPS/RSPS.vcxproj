@@ -41,7 +41,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -103,12 +103,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\SFML-2.6.1-windows-vc17-64-bit\SFML-2.6.1\include;C:\Users\이기원\Desktop\2023\2. 객체지향프로그래밍\프로젝트4_팀플\SFML-2.6.1-windows-vc16-64-bit\SFML-2.6.1\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\CAU\Downloads\SFML-2.6.1\include;C:\SFML-2.6.1-windows-vc17-64-bit\SFML-2.6.1\include;C:\Users\이기원\Desktop\2023\2. 객체지향프로그래밍\프로젝트4_팀플\SFML-2.6.1-windows-vc16-64-bit\SFML-2.6.1\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\SFML-2.6.1-windows-vc17-64-bit\SFML-2.6.1\lib;C:\Users\이기원\Desktop\2023\2. 객체지향프로그래밍\프로젝트4_팀플\SFML-2.6.1-windows-vc16-64-bit\SFML-2.6.1\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\CAU\Downloads\SFML-2.6.1\lib;C:\SFML-2.6.1-windows-vc17-64-bit\SFML-2.6.1\lib;C:\Users\이기원\Desktop\2023\2. 객체지향프로그래밍\프로젝트4_팀플\SFML-2.6.1-windows-vc16-64-bit\SFML-2.6.1\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-main-d.lib;sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;sfml-audio-d.lib;sfml-network-d.lib
 ;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>

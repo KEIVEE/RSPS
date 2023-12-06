@@ -24,6 +24,22 @@ Scissors::Scissors(const Scissors& original) {
     sprite.setPosition(Vector2f(randomX, randomY));
 }
 
+
+Scissors::Scissors(const Scissors& original, Texture& texturePtr) {
+    texture = original.texture;
+    random_device rd;
+    mt19937 gen(rd());
+    uniform_real_distribution<float> disX(0.0f, 1480.0f);
+    uniform_real_distribution<float> disY(0.0f, 880.0f);
+
+    float randomX = disX(gen);
+    float randomY = disY(gen);
+
+
+    sprite.setTexture(texturePtr);
+    sprite.setPosition(Vector2f(randomX, randomY));
+}
+
 Vector2f Scissors::nearest(vector<Rock>& rocks) {
     float shortestDistance = 1800.f;
     int shortestIndex = 0;
@@ -62,8 +78,7 @@ Vector2f Scissors::nearest(vector<Paper>& papers) {//rock.cpp에 있는 주석 참고
             float distanceY = papers[i].getSprite().getPosition().y - sprite.getPosition().y;
 
             distance = sqrt(distanceX * distanceX + distanceY * distanceY);
-Scissors::Scissors(const Scissors& original, Texture& texturePtr) {
-    texture = original.texture;
+
 
             if (shortestDistance > distance) {
                 shortestDistance = distance;
@@ -75,8 +90,6 @@ Scissors::Scissors(const Scissors& original, Texture& texturePtr) {
 
     return Vector2f(papers[shortestIndex].getSprite().getPosition().x - sprite.getPosition().x, papers[shortestIndex].getSprite().getPosition().y - sprite.getPosition().y);
 
-    sprite.setTexture(texturePtr);
-    sprite.setPosition(Vector2f(randomX, randomY));
 }
 
 Scissors::Scissors(Vector2f& pos, Texture& texturePtr) {

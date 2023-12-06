@@ -54,7 +54,7 @@ bool RSP::hitby(RSP& other) {
 Vector2f const RSP::getVelocity() {
     return velocity;
 }
-}
+
 
 
 void RSP::setPosition(Vector2f& position) {
