@@ -19,17 +19,17 @@ void Button::handleEvent(Event event, RenderWindow& window, bool& hasStarted,boo
         if (buttonShape.getGlobalBounds().contains(static_cast<Vector2f>(mousePosition)) && !isButtonPressed) {
             // 버튼이 클릭되었을 때 처리할 작업
 
-            if (text.getString()=="Start"){
+            if (text.getString()=="Start" && hasStarted == false){
                 buttonShape.setFillColor(Color::Red);
                 text.setString("Pause");
                 hasStarted = true;
             }
-            else if(text.getString()=="Pause"){
+            else if(text.getString()=="Pause" && hasStarted == true){
                 buttonShape.setFillColor(Color::Green);
                 text.setString("Start");
                 hasStarted = false;
             }
-            else if(text.getString()=="Restart"&&hasStarted==false){  //restart일 때
+            else if(text.getString()=="Restart" && hasStarted == true){  //restart일 때
                 buttonShape.setFillColor(Color::Green);
                 text.setString("Start");
                 text.setPosition(buttonShape.getPosition().x + 45, buttonShape.getPosition().y + 8);
