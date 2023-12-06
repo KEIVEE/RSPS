@@ -13,6 +13,6 @@ private:
 
 public:
 	Button(Vector2f position, Text& text);
-	void handleEvent(Event event, RenderWindow& window, bool& hasStarted, bool&reset, Text& text);
+	void handleEvent(Event event, RenderWindow& window, bool& hasStarted, bool&reset, bool& resume, Text& text);
 	void draw(RenderWindow& window);
 };

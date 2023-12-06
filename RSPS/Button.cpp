@@ -12,22 +12,30 @@ Button::Button(Vector2f position, Text& text) {
     text.setFillColor(Color::White);
 }
 
-void Button::handleEvent(Event event, RenderWindow& window, bool& hasStarted,bool&reset, Text& text) {
+void Button::handleEvent(Event event, RenderWindow& window, bool& hasStarted,bool&reset, bool& resume, Text& text) {
     if (event.type == Event::MouseButtonPressed) {
         Vector2i mousePosition = Mouse::getPosition(window);
 
         if (buttonShape.getGlobalBounds().contains(static_cast<Vector2f>(mousePosition)) && !isButtonPressed) {
             // 버튼이 클릭되었을 때 처리할 작업
 
-            if (text.getString()=="Start" && hasStarted == false){
-                buttonShape.setFillColor(Color::Red);
-                text.setString("Pause");
-                hasStarted = true;
+            if (text.getString()=="Start"){
+                if (hasStarted == false) {
+                    buttonShape.setFillColor(Color::Red);
+                    text.setString("Pause");
+                    hasStarted = true;
+                    resume = true;
+                }
+                else {
+                    buttonShape.setFillColor(Color::Red);
+                    text.setString("Pause");
+                    resume = true;
+                }
             }
             else if(text.getString()=="Pause" && hasStarted == true){
                 buttonShape.setFillColor(Color::Green);
                 text.setString("Start");
-                hasStarted = false;
+                resume = false;
             }
             else if(text.getString()=="Restart" && hasStarted == true){  //restart일 때
                 buttonShape.setFillColor(Color::Green);
@@ -36,8 +44,8 @@ void Button::handleEvent(Event event, RenderWindow& window, bool& hasStarted,boo
                 
 
                 reset = true;
-                
-
+                resume = false;
+                hasStarted = false;
             }
 
             isButtonPressed = true; // 버튼이 눌린 상태로 플래그 설정

@@ -51,11 +51,11 @@ int main(void)
     textPap.setPosition(380.f, 100.f);
 
 
-    Text debug; //paper 슬라이더 text
-    debug.setFont(font);
-    debug.setFillColor(Color::White);
-    debug.setCharacterSize(24);
-    debug.setPosition(380.f, 140.f);
+    Text result; //paper 슬라이더 text
+    result.setFont(font);
+    result.setFillColor(Color::White);
+    result.setCharacterSize(80);
+    result.setPosition(700.f, 420.f);
 
      
     // 버튼 객체 생성
@@ -101,6 +101,8 @@ int main(void)
     bool hasStarted = false;
     bool reset = false;
     bool slidered = false;
+    bool resume = false;
+    bool ended = false;
     //스타트 버튼을 누르면 hasstarted가 true가 될 것이다. 슬라이더는 이게 false일 때만 나타나고, true면 숨길 것
   
     
@@ -118,7 +120,7 @@ int main(void)
 
         
 
-        if (hasStarted == false) { //맨 처음 아니면 슬라이더를 조정했을때 객체 개수 맞추기
+        if (hasStarted == false && resume == false) { //맨 처음 아니면 슬라이더를 조정했을때 객체 개수 맞추기
             slider1.handleEvent(event, window);
             slider2.handleEvent(event, window);
             slider3.handleEvent(event, window);
@@ -154,7 +156,7 @@ int main(void)
         }
 
         
-        if (hasStarted == true) {
+        if (hasStarted == true && resume == true && ended == false) {
 
             for (int i = 0; i < rocks.size(); i++) { //rock의 경우
                 float rockChaseMagnitude = sqrt(rocks[i].nearest(scissorss).x * rocks[i].nearest(scissorss).x + rocks[i].nearest(scissorss).y * rocks[i].nearest(scissorss).y) * 2;
@@ -299,9 +301,6 @@ int main(void)
 
         textPap.setString("Papers: " + to_string(slider3.getOffset()));
 
-
-        debug.setString("pos: " + to_string(rocks.size()) + "  " + to_string(scissorss.size()) + "   " + to_string(papers.size()));
-
  
         
         
@@ -332,7 +331,7 @@ int main(void)
            
         }
         if (slidered == true) {
-            myButton.handleEvent(event, window, hasStarted, reset, textButton);
+            myButton.handleEvent(event, window, hasStarted, reset, resume, textButton);
         }
 
 
@@ -340,9 +339,21 @@ int main(void)
         if (rocks.size() + scissorss.size() + papers.size() == rocks.size()&&hasStarted==true ||
             rocks.size() + scissorss.size() + papers.size() == scissorss.size()&&hasStarted == true ||
             rocks.size() + scissorss.size() + papers.size() == papers.size()&&hasStarted == true) {
+
+            if (rocks.size() + scissorss.size() + papers.size() == rocks.size() && hasStarted == true) {
+                result.setString("Rock wins!");
+            }
+            if (rocks.size() + scissorss.size() + papers.size() == scissorss.size() && hasStarted == true) {
+                result.setString("Scissors wins!");
+            }           
+            if (rocks.size() + scissorss.size() + papers.size() == papers.size() && hasStarted == true) {
+                result.setString("Paper wins!");
+            }
+
+            ended = true;
+            window.draw(result);
             textButton.setString("Restart");        //restart로 변경
             textButton.setPosition(buttonPos.x + 25, buttonPos.y+8);
-            //hasStarted = false;                    //움직임 종료
 
         }
 
@@ -357,9 +368,10 @@ int main(void)
             slider3.resetSlider();
 
             reset = false;
-            hasStarted = false;
+            slidered = false;
+            ended = false;
         }
-       
+
         
         for (int i = 0; i < rocks.size(); i++) {
             rocks[i].draw(window);
@@ -371,7 +383,7 @@ int main(void)
             papers[i].draw(window);
         }
 
-        window.draw(debug);
+
       
         // 띄우기
         window.display();
