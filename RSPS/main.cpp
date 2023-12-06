@@ -51,11 +51,14 @@ int main(void)
     textPap.setPosition(380.f, 100.f);
 
 
-    
-
+     
     // 버튼 객체 생성
-
-    Button myButton(Vector2f(1200, 50),font);
+  
+    Vector2f buttonPos = Vector2f(1200.f, 50.f);
+    Text textButton;
+    textButton.setFont(font);
+    textButton.setString("Start");
+    Button myButton(buttonPos,textButton);
 
 
     Rock rock;
@@ -90,6 +93,7 @@ int main(void)
     Vector2f downSpeed = Vector2f(0.f, 0.1f);
 
     bool hasStarted = false;
+    bool reset = false;
     //스타트 버튼을 누르면 hasstarted가 true가 될 것이다. 슬라이더는 이게 false일 때만 나타나고, true면 숨길 것
   
     
@@ -105,9 +109,9 @@ int main(void)
             if (event.type == sf::Event::Closed)
                 window.close();
 
-        myButton.handleEvent(event, window, hasStarted);
         
-        if (hasStarted == false ) { //맨 처음 아니면 슬라이더를 조정했을때 객체 개수 맞추기
+
+        if (hasStarted == false) { //맨 처음 아니면 슬라이더를 조정했을때 객체 개수 맞추기
                 if (rocks.size() < slider1.getOffset()) {
                     while (rocks.size() < slider1.getOffset()) {
                         Rock newRock = Rock(rock, rockTexture);
@@ -281,10 +285,9 @@ int main(void)
 
         slider3.handleEvent(event, window);
         textPap.setString("Papers: " + to_string(slider3.getOffset()));
-        if (papers.size() > 0) {
-            //debug3.setString("pos: " + to_string(papers.back().getSprite().getPosition().x) + "  " + to_string(papers.back().getSprite().getPosition().y));
-        }
-
+ 
+        myButton.handleEvent(event, window, hasStarted, reset, textButton);
+        
 
         // 화면 청소
         window.clear();
@@ -306,6 +309,31 @@ int main(void)
         //가위,바위,보 추가해야 게임 스타트 할 수 있음
         if (rocks.size() + scissorss.size() + papers.size() >= 1) {
             myButton.draw(window);
+            window.draw(textButton);
+           
+        }
+
+        //만약 개체가 한 종류만 남으면
+        if (rocks.size() + scissorss.size() + papers.size() == rocks.size()&&hasStarted==true ||
+            rocks.size() + scissorss.size() + papers.size() == scissorss.size()&&hasStarted == true ||
+            rocks.size() + scissorss.size() + papers.size() == papers.size()&&hasStarted == true) {
+            textButton.setString("Restart");        //restart로 변경
+            textButton.setPosition(buttonPos.x + 25, buttonPos.y+8);
+            hasStarted = false;                     //움직임 종료
+
+        }
+
+        //게임종료 후, 다시 시작할 때 초기화
+        if (reset == true) {
+            rocks.clear();
+            scissorss.clear();
+            papers.clear();
+            
+            slider1.resetSlider();
+            slider2.resetSlider();
+            slider3.resetSlider();
+
+            reset = false;
         }
        
         
