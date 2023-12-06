@@ -3,9 +3,9 @@
 #include "Scissors.h"
 #include <exception>
 #include <random>
-
-
-
+/*
+Rock, Scissors, Paper는 다 비슷하기 때문에 Rock만 대표로 주석 작성하겠습니다. Rock.cpp참고.
+*/
 Paper::Paper() {
     if (!texture.loadFromFile("paper.png")) throw exception("image error");
     sprite.setTexture(texture);

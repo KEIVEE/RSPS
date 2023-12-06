@@ -7,7 +7,7 @@
 
 
 
-Rock::Rock() {
+Rock::Rock() {//기본 생성자
     if (!texture.loadFromFile("rock.png")) throw exception("image error");
 
 
@@ -15,6 +15,7 @@ Rock::Rock() {
 }
 
 Rock::Rock(const Rock& original, Texture& texturePtr) {
+    //복사 생성자: 텍스처가 깨지지 않게 이중 방어
     texture = original.texture;
 
     random_device rd;
@@ -31,22 +32,23 @@ Rock::Rock(const Rock& original, Texture& texturePtr) {
 
 
 Rock::Rock(Vector2f& pos, Texture& texturePtr) {
-    
+    //원하는 position에 생성하는 함수: 바위가 가위를 만나서 새 바위가 생성될때 쓰이지만
+    //rocks.back().setPosition(originalPosition) 부분 때문에 실은 있을 필요가 없기도 함.
     sprite.setTexture(texturePtr);
     sprite.setPosition(pos);
 }
 
 bool Rock::hitby(Paper& paper) {
+    //프로젝트3의 hasIntersected와 완전히 같은 역할을 하게 된 hitby함수
     if (this->getSprite().getGlobalBounds().intersects(paper.getSprite().getGlobalBounds())) {
         return true;
     }
     return false;
-    return false;
 }
 
-Vector2f Rock::nearest(vector<Scissors>& scissors) {
+Vector2f Rock::nearest(vector<Scissors>& scissors) { //제일 가까운 가위와의 위치 차이를 리턴한다.
     float shortestDistance = 1800.f; //충분히 크게 세팅: 대각선을 해도 1800은 안 나올걸
-    int shortestIndex = 0;
+    int shortestIndex = 0; //일단 0이라고 가정
 
     if (scissors.size() > 0) { //가위가 있을 때: 없으면 그냥 본인의 위치를 반환
         /*
@@ -67,7 +69,7 @@ Vector2f Rock::nearest(vector<Scissors>& scissors) {
             }
         }
     }
-    else return Vector2f(0, 0);;
+    else return Vector2f(0, 0); //가위가 없다: 0을 리턴
 
     return Vector2f(scissors[shortestIndex].getSprite().getPosition().x-sprite.getPosition().x, scissors[shortestIndex].getSprite().getPosition().y - sprite.getPosition().y);
     //최소 거리 인덱스에 있는 가위와 이 바위 객체와의 위치 차이를 리턴.

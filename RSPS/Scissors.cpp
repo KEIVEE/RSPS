@@ -3,7 +3,9 @@
 #include "Paper.h"
 #include <exception>
 #include <random>
-
+/*
+Rock, Scissors, Paper는 다 비슷하기 때문에 Rock만 대표로 주석 작성하겠습니다. Rock.cpp참고.
+*/
 Scissors::Scissors() {
     if (!texture.loadFromFile("scissors.png")) throw exception("image error");
     sprite.setTexture(texture);
@@ -53,7 +55,7 @@ Vector2f Scissors::nearest(vector<Rock>& rocks) {
 }
 
 
-Vector2f Scissors::nearest(vector<Paper>& papers) {//rock.cpp에 있는 주석 참고
+Vector2f Scissors::nearest(vector<Paper>& papers) {
     float shortestDistance = 1800.f;
     int shortestIndex = 0;
 
