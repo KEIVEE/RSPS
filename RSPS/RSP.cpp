@@ -30,6 +30,12 @@ void RSP::move(Vector2f& v, RenderWindow& window) {
         sprite.move(v.x, -v.y);
     }
 
+    if ((sprite.getPosition().y >= window.getSize().y - sprite.getGlobalBounds().height - 1 || sprite.getPosition().y <= 1) &&
+        (sprite.getPosition().x >= window.getSize().x - sprite.getGlobalBounds().width - 1 || sprite.getPosition().x <= 1)) {
+        sprite.move(-v.x, -v.y);
+    }
+
+
 }
 
 void RSP::draw(RenderWindow& window) {

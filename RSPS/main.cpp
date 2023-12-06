@@ -336,7 +336,7 @@ int main(void)
             rocks.size() + scissorss.size() + papers.size() == papers.size()&&hasStarted == true) {
             textButton.setString("Restart");        //restart로 변경
             textButton.setPosition(buttonPos.x + 25, buttonPos.y+8);
-            hasStarted = false;                     //움직임 종료
+            hasStarted = false;                    //움직임 종료
 
         }
 
