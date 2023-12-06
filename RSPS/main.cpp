@@ -242,10 +242,7 @@ int main(void)
             }
             
           
-            int i = 0;
-            int j = 0;
-            int papercount = papers.size();
-            int rockcount = rocks.size();
+
             for (int i = 0; i < papers.size(); i++) { //바위가 보자기를 만났을 때
                 for (int j = 0; j < rocks.size(); j++) {
                     if (rocks[j].hitby(papers[i])) {
