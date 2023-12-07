@@ -12,7 +12,6 @@ void RSP::move(Vector2f& v, RenderWindow& window) {
         sprite.getPosition().x >= 0 && sprite.getPosition().y >= 0) {
         //객체가 윈도우 창을 벗어나지 않는 하에
             sprite.move(v);
-            velocity = v;
             //v방향으로 움직이지만
     }
 
@@ -53,10 +52,6 @@ void RSP::draw(RenderWindow& window) {
 
 bool RSP::hitby(RSP& other) { //실행될 일이 없지만 발표할 때 잘 써먹을 수 있을 듯한 버추얼 함수.
     return false;
-}
-
-Vector2f const RSP::getVelocity() {
-    return velocity;
 }
 
 
