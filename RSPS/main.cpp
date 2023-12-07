@@ -359,7 +359,7 @@ int main(void)
         if (rocks.size() + scissorss.size() + papers.size() == rocks.size()&&hasStarted==true ||
             rocks.size() + scissorss.size() + papers.size() == scissorss.size()&&hasStarted == true ||
             rocks.size() + scissorss.size() + papers.size() == papers.size()&&hasStarted == true) {
-
+            ended = true;
             if (rocks.size() + scissorss.size() + papers.size() == rocks.size() && hasStarted == true) {//그게 바위다
                 result.setString("Rock wins!");
             }

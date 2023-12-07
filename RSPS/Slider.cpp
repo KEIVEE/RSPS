@@ -41,7 +41,7 @@ void Slider::handleEvent(Event event, RenderWindow& window) { //이벤트 핸들링
                 //플로팅바의 위치를 마우스 위치로 설정.
             }
             offsetX = (((int)floatingBar.getPosition().x - (int)sliderBar.getPosition().x) / 3);
-            //오프셋은 플로팅바 위치 - 슬라이더바 위치 / 3
+            //오프셋은 (플로팅바 위치 - 슬라이더바 위치) / 3
         }
     }
 }
