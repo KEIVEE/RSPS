@@ -179,9 +179,9 @@ int main(void)
             게임이 끝났을 때 갑자기 잘 있던 객체들이 사라짐. 왜 그러는지는 모름
             */
             for (int i = 0; i < rocks.size(); i++) { //rock의 경우
-                float rockChaseMagnitude = sqrt(rocks[i].nearest(scissorss).x * rocks[i].nearest(scissorss).x + rocks[i].nearest(scissorss).y * rocks[i].nearest(scissorss).y) * 2;
+                float rockChaseMagnitude = sqrt(rocks[i].nearest(scissorss).x * rocks[i].nearest(scissorss).x + rocks[i].nearest(scissorss).y * rocks[i].nearest(scissorss).y);
                 //가장 가까운 가위와의 거리: 쫓아가야 함
-                float rockAvoidMagnitude = sqrt(rocks[i].nearest(papers).x * rocks[i].nearest(papers).x + rocks[i].nearest(papers).y * rocks[i].nearest(papers).y) * 2;
+                float rockAvoidMagnitude = sqrt(rocks[i].nearest(papers).x * rocks[i].nearest(papers).x + rocks[i].nearest(papers).y * rocks[i].nearest(papers).y);
                 //가장 가까운 보자기와의 거리: 피해야 함
 
                 Vector2f rockChaseVelocity = Vector2f(rocks[i].nearest(scissorss).x / rockChaseMagnitude, rocks[i].nearest(scissorss).y / rockChaseMagnitude);
