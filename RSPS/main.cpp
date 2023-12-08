@@ -185,9 +185,9 @@ int main(void)
                 //가장 가까운 보자기와의 거리: 피해야 함
 
                 Vector2f rockChaseVelocity = Vector2f(rocks[i].nearest(scissorss).x / rockChaseMagnitude, rocks[i].nearest(scissorss).y / rockChaseMagnitude);
-                //가장 가까운 가위와의 위치 차이를 바탕으로 단위 속도(1이 아니긴 함) 벡터를 생성
+                //가장 가까운 가위와의 위치 차이를 바탕으로 단위 속도 벡터를 생성
                 Vector2f rockAvoidVelocity = Vector2f(-rocks[i].nearest(papers).x / rockAvoidMagnitude, -rocks[i].nearest(papers).y / rockAvoidMagnitude);
-                //가장 가까운 보자기와의 위치 차이를 바탕으로 단위 속도(1이 아니긴 함) 벡터를 생성
+                //가장 가까운 보자기와의 위치 차이를 바탕으로 단위 속도 벡터를 생성
 
                 Vector2f rockVelocity = (rockChaseMagnitude >= rockAvoidMagnitude ? rockAvoidVelocity : rockChaseVelocity);
                 //둘 중에 어떤 벡터를 쓸 것인가: 가장 가까운 보자기와 가장 가까운 가위의 거리를 생각
